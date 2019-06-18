@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Google Python Style Guide &mdash; Google Style Guides 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Google Style Guides" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Google Style Guides
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python Style Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#background">1. Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-language-rules">2. Python Language Rules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imports">2.2 Imports</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#definition">2.2.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pros">2.2.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cons">2.2.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#decision">2.2.4 Decision</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#python-style-rules">3. Python Style Rules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#semicolons">3.1 Semicolons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#line-length">3.2 Line length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parentheses">3.3 Parentheses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#indentation">3.4 Indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comments-and-docstrings">3.8 Comments and Docstrings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#docstrings">3.8.1 Docstrings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules">3.8.2 Modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functions-and-methods">3.8.3 Functions and Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classes">3.8.4 Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block-and-inline-comments">3.8.5 Block and Inline Comments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#punctuation-spelling-and-grammar">3.8.6 Punctuation, Spelling and Grammar</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Google Style Guides</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Google Python Style Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/pyguide/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="google-python-style-guide">
+<h1>Google Python Style Guide<a class="headerlink" href="#google-python-style-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="background">
+<h2>1. Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<p>Python is the main dynamic language used at Google. This style guide is a list of dos and don’ts for Python programs.</p>
+<p>To help you format code correctly, we’ve created a <a class="reference external" href="https://google.github.io/styleguide/google_python_style.vim">settings file for Vim</a>. For Emacs, the default settings should be fine.</p>
+<p>Many teams use the <a class="reference external" href="https://github.com/google/yapf/">yapf</a> auto-formatter to avoid arguing over formatting.</p>
+</div>
+<div class="section" id="python-language-rules">
+<h2>2. Python Language Rules<a class="headerlink" href="#python-language-rules" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="imports">
+<h3>2.2 Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">import</span></code> statements for packages and modules only, not for individual classes or functions. Note that there is an explicit exemption for imports from the <a class="reference external" href="https://google.github.io/styleguide/pyguide.html#typing-imports">typing module</a>.</p>
+<div class="section" id="definition">
+<h4>2.2.1 Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h4>
+<p>Reusability mechanism for sharing code from one module to another.</p>
+</div>
+<div class="section" id="pros">
+<h4>2.2.2 Pros<a class="headerlink" href="#pros" title="Permalink to this headline">¶</a></h4>
+<p>The namespace management convention is simple. The source of each identifier is indicated in a consistent way; <code class="docutils literal notranslate"><span class="pre">x.Obj</span></code> says that object <code class="docutils literal notranslate"><span class="pre">Obj</span></code> is defined in module <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+</div>
+<div class="section" id="cons">
+<h4>2.2.3 Cons<a class="headerlink" href="#cons" title="Permalink to this headline">¶</a></h4>
+<p>Module names can still collide. Some module names are inconveniently long.</p>
+</div>
+<div class="section" id="decision">
+<h4>2.2.4 Decision<a class="headerlink" href="#decision" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">x</span></code> for importing packages and modules.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">x</span> <span class="pre">import</span> <span class="pre">y</span></code> where <code class="docutils literal notranslate"><span class="pre">x</span></code> is the package prefix and <code class="docutils literal notranslate"><span class="pre">y</span></code> is the module name with no prefix.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">x</span> <span class="pre">import</span> <span class="pre">y</span> <span class="pre">as</span> <span class="pre">z</span></code> if two modules named <code class="docutils literal notranslate"><span class="pre">y</span></code> are to be imported or if <code class="docutils literal notranslate"><span class="pre">y</span></code> is an inconveniently long name.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">y</span> <span class="pre">as</span> <span class="pre">z</span></code> only when <code class="docutils literal notranslate"><span class="pre">z</span></code> is a standard abbreviation (e.g., <code class="docutils literal notranslate"><span class="pre">np</span></code> for <code class="docutils literal notranslate"><span class="pre">numpy</span></code>).</p></li>
+</ul>
+<p>For example the module <code class="docutils literal notranslate"><span class="pre">sound.effects.echo</span></code> may be imported as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sound.effects</span> <span class="kn">import</span> <span class="n">echo</span>
+<span class="o">...</span>
+<span class="n">echo</span><span class="o">.</span><span class="n">EchoFilter</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">atten</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Do not use relative names in imports. Even if the module is in the same package, use the full package name. This helps prevent unintentionally importing a package twice.</p>
+<p>Imports from the <a class="reference external" href="https://google.github.io/styleguide/pyguide.html#typing-imports">typing module</a> are exempt from this rule.</p>
+</div>
+</div>
+</div>
+<div class="section" id="python-style-rules">
+<h2>3. Python Style Rules<a class="headerlink" href="#python-style-rules" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="semicolons">
+<h3>3.1 Semicolons<a class="headerlink" href="#semicolons" title="Permalink to this headline">¶</a></h3>
+<p>Do not terminate your lines with semicolons, and do not use semicolons to put two statements on the same line.</p>
+</div>
+<div class="section" id="line-length">
+<h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
+<p>Maximum line length is 80 characters.</p>
+<p>Exceptions:</p>
+<ul class="simple">
+<li><p>Long import statements.</p></li>
+<li><p>URLs, pathnames, or long flags in comments.</p></li>
+<li><p>Long string module level constants not containing whitespace that would be inconvenient to split across lines such as URLs or pathnames.</p></li>
+<li><p>Pylint disable comments. (e.g.: <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">pylint:</span> <span class="pre">disable=invalid-name</span></code>)</p></li>
+</ul>
+<p>Do not use backslash line continuation except for <code class="docutils literal notranslate"><span class="pre">with</span></code> statements requiring three or more context managers.</p>
+<p>Make use of Python’s <a class="reference external" href="http://docs.python.org/reference/lexical_analysis.html#implicit-line-joining">implicit line joining inside parentheses, brackets and braces</a>. If necessary, you can add an extra pair of parentheses around an expression.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="n">foo_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">design</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+             <span class="n">emphasis</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">highlight</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="n">width</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">height</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span>
+         <span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span> <span class="ow">and</span> <span class="n">emphasis</span> <span class="o">==</span> <span class="s1">&#39;strong&#39;</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>When a literal string won’t fit on a single line, use parentheses for implicit line joining.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;This will build a very long long &#39;</span>
+     <span class="s1">&#39;long long long long long long string&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Within comments, put long URLs on their own line if necessary.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>  <span class="c1"># See details at</span>
+      <span class="c1"># http://www.example.com/us/developer/documentation/api/content/v2.0/csv_file_name_extension_full_specification.html</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>  <span class="c1"># See details at</span>
+     <span class="c1"># http://www.example.com/us/developer/documentation/api/content/\</span>
+     <span class="c1"># v2.0/csv_file_name_extension_full_specification.html</span>
+</pre></div>
+</div>
+<p>It is permissible to use backslash continuation when defining a <code class="docutils literal notranslate"><span class="pre">with</span></code> statement whose expressions span three or more lines. For two lines of expressions, use a nested <code class="docutils literal notranslate"><span class="pre">with</span></code> statement:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>  <span class="k">with</span> <span class="n">very_long_first_expression_function</span><span class="p">()</span> <span class="k">as</span> <span class="n">spam</span><span class="p">,</span> \
+           <span class="n">very_long_second_expression_function</span><span class="p">()</span> <span class="k">as</span> <span class="n">beans</span><span class="p">,</span> \
+           <span class="n">third_thing</span><span class="p">()</span> <span class="k">as</span> <span class="n">eggs</span><span class="p">:</span>
+          <span class="n">place_order</span><span class="p">(</span><span class="n">eggs</span><span class="p">,</span> <span class="n">beans</span><span class="p">,</span> <span class="n">spam</span><span class="p">,</span> <span class="n">beans</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>  <span class="k">with</span> <span class="n">VeryLongFirstExpressionFunction</span><span class="p">()</span> <span class="k">as</span> <span class="n">spam</span><span class="p">,</span> \
+          <span class="n">VeryLongSecondExpressionFunction</span><span class="p">()</span> <span class="k">as</span> <span class="n">beans</span><span class="p">:</span>
+       <span class="n">PlaceOrder</span><span class="p">(</span><span class="n">eggs</span><span class="p">,</span> <span class="n">beans</span><span class="p">,</span> <span class="n">spam</span><span class="p">,</span> <span class="n">beans</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>  <span class="k">with</span> <span class="n">very_long_first_expression_function</span><span class="p">()</span> <span class="k">as</span> <span class="n">spam</span><span class="p">:</span>
+          <span class="k">with</span> <span class="n">very_long_second_expression_function</span><span class="p">()</span> <span class="k">as</span> <span class="n">beans</span><span class="p">:</span>
+              <span class="n">place_order</span><span class="p">(</span><span class="n">beans</span><span class="p">,</span> <span class="n">spam</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Make note of the indentation of the elements in the line continuation examples above; see the <a class="reference internal" href="#indentation"><span class="std std-ref">indentation</span></a> section for explanation.</p>
+</div>
+<div class="section" id="parentheses">
+<h3>3.3 Parentheses<a class="headerlink" href="#parentheses" title="Permalink to this headline">¶</a></h3>
+<p>Use parentheses sparingly.</p>
+<p>It is fine, though not required, to use parentheses around tuples. Do not use them in return statements or conditional statements unless using parentheses for implied line continuation or to indicate a tuple.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="k">if</span> <span class="n">foo</span><span class="p">:</span>
+         <span class="n">bar</span><span class="p">()</span>
+     <span class="k">while</span> <span class="n">x</span><span class="p">:</span>
+         <span class="n">x</span> <span class="o">=</span> <span class="n">bar</span><span class="p">()</span>
+     <span class="k">if</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">y</span><span class="p">:</span>
+        <span class="n">bar</span><span class="p">()</span>
+     <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">bar</span><span class="p">()</span>
+     <span class="c1"># For a 1 item tuple the ()s are more visually obvious than the comma.</span>
+     <span class="n">onesie</span> <span class="o">=</span> <span class="p">(</span><span class="n">foo</span><span class="p">,)</span>
+     <span class="k">return</span> <span class="n">foo</span>
+     <span class="k">return</span> <span class="n">spam</span><span class="p">,</span> <span class="n">beans</span>
+     <span class="k">return</span> <span class="p">(</span><span class="n">spam</span><span class="p">,</span> <span class="n">beans</span><span class="p">)</span>
+     <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">bar</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">bar</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="indentation">
+<span id="id2"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="comments-and-docstrings">
+<h3>3.8 Comments and Docstrings<a class="headerlink" href="#comments-and-docstrings" title="Permalink to this headline">¶</a></h3>
+<p>Be sure to use the right style for module, function, method docstrings and inline comments.</p>
+<div class="section" id="docstrings">
+<h4>3.8.1 Docstrings<a class="headerlink" href="#docstrings" title="Permalink to this headline">¶</a></h4>
+<p>Python uses <em>docstrings</em> to document code. A docstring is a string that is the first statement in a package, module, class or function. These strings can be extracted automatically through the <code class="docutils literal notranslate"><span class="pre">__doc__</span></code> member of the object and are used by <code class="docutils literal notranslate"><span class="pre">pydoc</span></code>. (Try running <code class="docutils literal notranslate"><span class="pre">pydoc</span></code> on your module to see how it looks.) Always use the three double-quote <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> format for docstrings (per <a class="reference external" href="https://www.google.com/url?sa=D&amp;q=http://www.python.org/dev/peps/pep-0257/">PEP 257</a>). A docstring should be organized as a summary line (one physical line) terminated by a period, question mark, or exclamation point, followed by a blank line, followed by the rest of the docstring starting at the same cursor position as the first quote of the first line. There are more formatting guidelines for docstrings below.</p>
+</div>
+<div class="section" id="modules">
+<h4>3.8.2 Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h4>
+<p>Every file should contain license boilerplate. Choose the appropriate boilerplate for the license used by the project (for example, Apache 2.0, BSD, LGPL, GPL)</p>
+</div>
+<div class="section" id="functions-and-methods">
+<h4>3.8.3 Functions and Methods<a class="headerlink" href="#functions-and-methods" title="Permalink to this headline">¶</a></h4>
+<p>A function must have a docstring, unless it meets all of the following criteria:</p>
+<ul class="simple">
+<li><p>not externally visible</p></li>
+<li><p>very short</p></li>
+<li><p>obvious</p></li>
+</ul>
+<p>A docstring should give enough information to write a call to the function without reading the function’s code. The docstring should be descriptive (<code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;Fetches</span> <span class="pre">rows</span> <span class="pre">from</span> <span class="pre">a</span> <span class="pre">Bigtable.&quot;&quot;&quot;</span></code>) rather than imperative (“”“Fetch rows from a Bigtable.”“”). A docstring should describe the function’s calling syntax and its semantics, not its implementation. For tricky code, comments alongside the code are more appropriate than using docstrings.</p>
+<p>A method that overrides a method from a base class may have a simple docstring sending the reader to its overridden method’s docstring, such as <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;See</span> <span class="pre">base</span> <span class="pre">class.&quot;&quot;&quot;</span></code>. The rationale is that there is no need to repeat in many places documentation that is already present in the base method’s docstring. However, if the overriding method’s behavior is substantially different from the overridden method, or details need to be provided (e.g., documenting additional side effects), a docstring with at least those differences is required on the overriding method.</p>
+<p>Certain aspects of a function should be documented in special sections, listed below. Each section begins with a heading line, which ends with a colon. Sections should be indented two spaces, except for the heading.</p>
+<dl id="doc-function-args">
+<dt>Args:</dt><dd><p>List each parameter by name. A description should follow the name, and be separated by a colon and a space. If the description is too long to fit on a single 80-character line, use a hanging indent of 2 or 4 spaces (be consistent with the rest of the file).</p>
+<p>The description should include required type(s) if the code does not contain a corresponding type annotation.</p>
+<p>If a function accepts <code class="docutils literal notranslate"><span class="pre">*foo</span></code> (variable length argument lists) and/or <code class="docutils literal notranslate"><span class="pre">**bar</span></code> (arbitrary keyword arguments), they should be listed as <code class="docutils literal notranslate"><span class="pre">*foo</span></code> and <code class="docutils literal notranslate"><span class="pre">**bar</span></code>.</p>
+</dd>
+<dt>Returns: (or Yields: for generators)</dt><dd><p>Describe the type and semantics of the return value. If the function only returns None, this section is not required. It may also be omitted if the docstring starts with Returns or Yields (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;Returns</span> <span class="pre">row</span> <span class="pre">from</span> <span class="pre">Bigtable</span> <span class="pre">as</span> <span class="pre">a</span> <span class="pre">tuple</span> <span class="pre">of</span> <span class="pre">strings.&quot;&quot;&quot;</span></code>) and the opening sentence is sufficient to describe return value.</p>
+</dd>
+<dt>Raises:</dt><dd><p>List all exceptions that are relevant to the interface.</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fetch_bigtable_rows</span><span class="p">(</span><span class="n">big_table</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">other_silly_variable</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fetches rows from a Bigtable.</span>
+
+<span class="sd">    Retrieves rows pertaining to the given keys from the Table instance</span>
+<span class="sd">    represented by big_table.  Silly things may happen if</span>
+<span class="sd">    other_silly_variable is not None.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        big_table: An open Bigtable Table instance.</span>
+<span class="sd">        keys: A sequence of strings representing the key of each table row</span>
+<span class="sd">            to fetch.</span>
+<span class="sd">        other_silly_variable: Another optional variable, that has a much</span>
+<span class="sd">            longer name than the other args, and which does nothing.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dict mapping keys to the corresponding table row data</span>
+<span class="sd">        fetched. Each row is represented as a tuple of strings. For</span>
+<span class="sd">        example:</span>
+
+<span class="sd">        {&#39;Serak&#39;: (&#39;Rigel VII&#39;, &#39;Preparer&#39;),</span>
+<span class="sd">        &#39;Zim&#39;: (&#39;Irk&#39;, &#39;Invader&#39;),</span>
+<span class="sd">        &#39;Lrrr&#39;: (&#39;Omicron Persei 8&#39;, &#39;Emperor&#39;)}</span>
+
+<span class="sd">        If a key from the keys argument is missing from the dictionary,</span>
+<span class="sd">        then that row was not found in the table.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        IOError: An error occurred accessing the bigtable.Table object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="classes">
+<h4>3.8.4 Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h4>
+<p>Classes should have a docstring below the class definition describing the class. If your class has public attributes, they should be documented here in an <code class="docutils literal notranslate"><span class="pre">Attributes</span></code> section and follow the same formatting as a <a class="reference internal" href="#doc-function-args"><span class="std std-ref">function’s Args</span></a> section.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SampleClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Summary of class here.</span>
+
+<span class="sd">    Longer class information....</span>
+<span class="sd">    Longer class information....</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        likes_spam: A boolean indicating if we like SPAM or not.</span>
+<span class="sd">        eggs: An integer count of the eggs we have laid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">likes_spam</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">likes_spam</span> <span class="o">=</span> <span class="n">likes_spam</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eggs</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">public_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs operation blah.&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="block-and-inline-comments">
+<h4>3.8.5 Block and Inline Comments<a class="headerlink" href="#block-and-inline-comments" title="Permalink to this headline">¶</a></h4>
+<p>The final place to have comments is in tricky parts of the code. If you’re going to have to explain it at the next <a class="reference external" href="http://en.wikipedia.org/wiki/Code_review">code review</a>, you should comment it now. Complicated operations get a few lines of comments before the operations commence. Non-obvious ones get comments at the end of the line.</p>
+<p>To improve legibility, these comments should be at least 2 spaces away from the code.</p>
+<p>On the other hand, never describe the code. Assume the person reading the code knows Python (though not what you’re trying to do) better than you do.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># BAD COMMENT: Now go through the b array and make sure whenever i occurs</span>
+<span class="c1"># the next element is i+1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="punctuation-spelling-and-grammar">
+<h4>3.8.6 Punctuation, Spelling and Grammar<a class="headerlink" href="#punctuation-spelling-and-grammar" title="Permalink to this headline">¶</a></h4>
+<p>Pay attention to punctuation, spelling, and grammar; it is easier to read well-written comments than badly written ones.</p>
+<p>Comments should be as readable as narrative text, with proper capitalization and punctuation. In many cases, complete sentences are more readable than sentence fragments. Shorter comments, such as comments at the end of a line of code, can sometimes be less formal, but you should be consistent with your style.</p>
+<p>Although it can be frustrating to have a code reviewer point out that you are using a comma when you should be using a semicolon, it is very important that source code maintain a high level of clarity and readability. Proper punctuation, spelling, and grammar help with that goal.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Google Style Guides" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Google
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
