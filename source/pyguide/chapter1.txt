@@ -1,6 +1,3 @@
-Google Python Style Guide
-=========================
-
 1. Background
 -------------
 
@@ -9,7 +6,3 @@ Python is the main dynamic language used at Google. This style guide is a list o
 To help you format code correctly, we’ve created a `settings file for Vim <https://google.github.io/styleguide/google_python_style.vim>`_. For Emacs, the default settings should be fine.
 
 Many teams use the `yapf <https://github.com/google/yapf/>`_ auto-formatter to avoid arguing over formatting.
-
-.. include:: chapter2.txt
-
-.. include:: chapter3.txt

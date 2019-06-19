@@ -1,0 +1,237 @@
+3. Python Style Rules
+---------------------
+
+3.1 Semicolons
+^^^^^^^^^^^^^^
+
+Do not terminate your lines with semicolons, and do not use semicolons to put two statements on the same line.
+
+3.2 Line length
+^^^^^^^^^^^^^^^
+
+Maximum line length is 80 characters.
+
+Exceptions:
+
+* Long import statements.
+* URLs, pathnames, or long flags in comments.
+* Long string module level constants not containing whitespace that would be inconvenient to split across lines such as URLs or pathnames.
+* Pylint disable comments. (e.g.: ``# pylint: disable=invalid-name``)
+
+Do not use backslash line continuation except for ``with`` statements requiring three or more context managers.
+
+Make use of Python’s `implicit line joining inside parentheses, brackets and braces <http://docs.python.org/reference/lexical_analysis.html#implicit-line-joining>`_. If necessary, you can add an extra pair of parentheses around an expression.
+
+.. code-block:: python
+
+    Yes: foo_bar(self, width, height, color='black', design=None, x='foo',
+                 emphasis=None, highlight=0)
+
+         if (width == 0 and height == 0 and
+             color == 'red' and emphasis == 'strong'):
+
+When a literal string won’t fit on a single line, use parentheses for implicit line joining.
+
+.. code-block:: python
+
+    x = ('This will build a very long long '
+         'long long long long long long string')
+
+Within comments, put long URLs on their own line if necessary.
+
+.. code-block:: python
+
+    Yes:  # See details at
+          # http://www.example.com/us/developer/documentation/api/content/v2.0/csv_file_name_extension_full_specification.html
+
+.. code-block:: python
+
+    No:  # See details at
+         # http://www.example.com/us/developer/documentation/api/content/\
+         # v2.0/csv_file_name_extension_full_specification.html
+
+It is permissible to use backslash continuation when defining a ``with`` statement whose expressions span three or more lines. For two lines of expressions, use a nested ``with`` statement:
+
+.. code-block:: python
+
+    Yes:  with very_long_first_expression_function() as spam, \
+               very_long_second_expression_function() as beans, \
+               third_thing() as eggs:
+              place_order(eggs, beans, spam, beans)
+
+.. code-block:: python
+
+    No:  with VeryLongFirstExpressionFunction() as spam, \
+              VeryLongSecondExpressionFunction() as beans:
+           PlaceOrder(eggs, beans, spam, beans)
+
+.. code-block:: python
+
+    Yes:  with very_long_first_expression_function() as spam:
+              with very_long_second_expression_function() as beans:
+                  place_order(beans, spam)
+
+Make note of the indentation of the elements in the line continuation examples above; see the :ref:`indentation <3-4-Indentation>` section for explanation.
+
+3.3 Parentheses
+^^^^^^^^^^^^^^^
+
+Use parentheses sparingly.
+
+It is fine, though not required, to use parentheses around tuples. Do not use them in return statements or conditional statements unless using parentheses for implied line continuation or to indicate a tuple.
+
+.. code-block:: python
+
+    Yes: if foo:
+             bar()
+         while x:
+             x = bar()
+         if x and y:
+            bar()
+         if not x:
+            bar()
+         # For a 1 item tuple the ()s are more visually obvious than the comma.
+         onesie = (foo,)
+         return foo
+         return spam, beans
+         return (spam, beans)
+         for (x, y) in dict.items(): ...
+
+.. code-block:: python
+
+    No: if (x):
+            bar()
+        if not(x):
+            bar()
+        return (foo)
+
+.. _3-4-Indentation:
+
+3.4 Indentation
+^^^^^^^^^^^^^^^
+
+3.8 Comments and Docstrings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Be sure to use the right style for module, function, method docstrings and inline comments.
+
+3.8.1 Docstrings
+""""""""""""""""
+
+Python uses *docstrings* to document code. A docstring is a string that is the first statement in a package, module, class or function. These strings can be extracted automatically through the ``__doc__`` member of the object and are used by ``pydoc``. (Try running ``pydoc`` on your module to see how it looks.) Always use the three double-quote ``"""`` format for docstrings (per `PEP 257 <https://www.google.com/url?sa=D&q=http://www.python.org/dev/peps/pep-0257/>`_). A docstring should be organized as a summary line (one physical line) terminated by a period, question mark, or exclamation point, followed by a blank line, followed by the rest of the docstring starting at the same cursor position as the first quote of the first line. There are more formatting guidelines for docstrings below.
+
+3.8.2 Modules
+"""""""""""""
+
+Every file should contain license boilerplate. Choose the appropriate boilerplate for the license used by the project (for example, Apache 2.0, BSD, LGPL, GPL)
+
+3.8.3 Functions and Methods
+"""""""""""""""""""""""""""
+
+A function must have a docstring, unless it meets all of the following criteria:
+
+* not externally visible
+* very short
+* obvious
+
+A docstring should give enough information to write a call to the function without reading the function’s code. The docstring should be descriptive (``"""Fetches rows from a Bigtable."""``) rather than imperative ("""Fetch rows from a Bigtable."""). A docstring should describe the function’s calling syntax and its semantics, not its implementation. For tricky code, comments alongside the code are more appropriate than using docstrings.
+
+A method that overrides a method from a base class may have a simple docstring sending the reader to its overridden method’s docstring, such as ``"""See base class."""``. The rationale is that there is no need to repeat in many places documentation that is already present in the base method’s docstring. However, if the overriding method’s behavior is substantially different from the overridden method, or details need to be provided (e.g., documenting additional side effects), a docstring with at least those differences is required on the overriding method.
+
+Certain aspects of a function should be documented in special sections, listed below. Each section begins with a heading line, which ends with a colon. Sections should be indented two spaces, except for the heading.
+
+.. _doc-function-args:
+
+Args:
+    List each parameter by name. A description should follow the name, and be separated by a colon and a space. If the description is too long to fit on a single 80-character line, use a hanging indent of 2 or 4 spaces (be consistent with the rest of the file).
+
+    The description should include required type(s) if the code does not contain a corresponding type annotation.
+
+    If a function accepts ``*foo`` (variable length argument lists) and/or ``**bar`` (arbitrary keyword arguments), they should be listed as ``*foo`` and ``**bar``.
+
+Returns: (or Yields: for generators)
+    Describe the type and semantics of the return value. If the function only returns None, this section is not required. It may also be omitted if the docstring starts with Returns or Yields (e.g. ``"""Returns row from Bigtable as a tuple of strings."""``) and the opening sentence is sufficient to describe return value.
+
+Raises:
+    List all exceptions that are relevant to the interface.
+
+.. code-block:: python
+
+    def fetch_bigtable_rows(big_table, keys, other_silly_variable=None):
+        """Fetches rows from a Bigtable.
+
+        Retrieves rows pertaining to the given keys from the Table instance
+        represented by big_table.  Silly things may happen if
+        other_silly_variable is not None.
+
+        Args:
+            big_table: An open Bigtable Table instance.
+            keys: A sequence of strings representing the key of each table row
+                to fetch.
+            other_silly_variable: Another optional variable, that has a much
+                longer name than the other args, and which does nothing.
+
+        Returns:
+            A dict mapping keys to the corresponding table row data
+            fetched. Each row is represented as a tuple of strings. For
+            example:
+
+            {'Serak': ('Rigel VII', 'Preparer'),
+            'Zim': ('Irk', 'Invader'),
+            'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+            If a key from the keys argument is missing from the dictionary,
+            then that row was not found in the table.
+
+        Raises:
+            IOError: An error occurred accessing the bigtable.Table object.
+        """
+
+3.8.4 Classes
+"""""""""""""
+
+Classes should have a docstring below the class definition describing the class. If your class has public attributes, they should be documented here in an ``Attributes`` section and follow the same formatting as a :ref:`function’s Args <doc-function-args>` section.
+
+.. code-block:: python
+
+    class SampleClass(object):
+        """Summary of class here.
+
+        Longer class information....
+        Longer class information....
+
+        Attributes:
+            likes_spam: A boolean indicating if we like SPAM or not.
+            eggs: An integer count of the eggs we have laid.
+        """
+
+        def __init__(self, likes_spam=False):
+            """Inits SampleClass with blah."""
+            self.likes_spam = likes_spam
+            self.eggs = 0
+
+        def public_method(self):
+            """Performs operation blah."""
+
+3.8.5 Block and Inline Comments
+"""""""""""""""""""""""""""""""
+
+The final place to have comments is in tricky parts of the code. If you’re going to have to explain it at the next `code review <http://en.wikipedia.org/wiki/Code_review>`_, you should comment it now. Complicated operations get a few lines of comments before the operations commence. Non-obvious ones get comments at the end of the line.
+
+To improve legibility, these comments should be at least 2 spaces away from the code.
+
+On the other hand, never describe the code. Assume the person reading the code knows Python (though not what you’re trying to do) better than you do.
+
+.. code-block:: python
+
+    # BAD COMMENT: Now go through the b array and make sure whenever i occurs
+    # the next element is i+1
+
+3.8.6 Punctuation, Spelling and Grammar
+"""""""""""""""""""""""""""""""""""""""
+
+Pay attention to punctuation, spelling, and grammar; it is easier to read well-written comments than badly written ones.
+
+Comments should be as readable as narrative text, with proper capitalization and punctuation. In many cases, complete sentences are more readable than sentence fragments. Shorter comments, such as comments at the end of a line of code, can sometimes be less formal, but you should be consistent with your style.
+
+Although it can be frustrating to have a code reviewer point out that you are using a comma when you should be using a semicolon, it is very important that source code maintain a high level of clarity and readability. Proper punctuation, spelling, and grammar help with that goal.
