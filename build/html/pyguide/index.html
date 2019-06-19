@@ -117,7 +117,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#semicolons">3.1 Semicolons</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#line-length">3.2 Line length</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#parentheses">3.3 Parentheses</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#indentation">3.4 Indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#indentation">3.4 Indentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#trailing-commas-in-sequences-of-items">3.4.1 Trailing commas in sequences of items?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#blank-lines">3.5 Blank Lines</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#comments-and-docstrings">3.8 Comments and Docstrings</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#docstrings">3.8.1 Docstrings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modules">3.8.2 Modules</a></li>
@@ -127,6 +131,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#punctuation-spelling-and-grammar">3.8.6 Punctuation, Spelling and Grammar</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">3.9 Classes</a></li>
 </ul>
 </li>
 </ul>
@@ -402,7 +407,7 @@
 <p>Do not terminate your lines with semicolons, and do not use semicolons to put two statements on the same line.</p>
 </div>
 <div class="section" id="line-length">
-<h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
+<span id="id13"></span><h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
 <p>Maximum line length is 80 characters.</p>
 <p>Exceptions:</p>
 <ul class="simple">
@@ -483,7 +488,82 @@
 </div>
 </div>
 <div class="section" id="indentation">
-<span id="id13"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
+<span id="id14"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
+<p>Indent your code blocks with 4 spaces.</p>
+<p>Never use tabs or mix tabs and spaces. In cases of implied line continuation, you should align wrapped elements either vertically, as per the examples in the <a class="reference internal" href="#line-length"><span class="std std-ref">line length</span></a> section; or using a hanging indent of 4 spaces, in which case there should be nothing after the open parenthesis or bracket on the first line.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>   <span class="c1"># Aligned with opening delimiter</span>
+       <span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span><span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+                                <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+       <span class="n">meal</span> <span class="o">=</span> <span class="p">(</span><span class="n">spam</span><span class="p">,</span>
+               <span class="n">beans</span><span class="p">)</span>
+
+       <span class="c1"># Aligned with opening delimiter in a dictionary</span>
+       <span class="n">foo</span> <span class="o">=</span> <span class="p">{</span>
+           <span class="n">long_dictionary_key</span><span class="p">:</span> <span class="n">value1</span> <span class="o">+</span>
+                                <span class="n">value2</span><span class="p">,</span>
+           <span class="o">...</span>
+       <span class="p">}</span>
+
+       <span class="c1"># 4-space hanging indent; nothing on first line</span>
+       <span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span>
+           <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span> <span class="n">var_three</span><span class="p">,</span>
+           <span class="n">var_four</span><span class="p">)</span>
+       <span class="n">meal</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">spam</span><span class="p">,</span>
+            <span class="n">beans</span><span class="p">)</span>
+
+       <span class="c1"># 4-space hanging indent in a dictionary</span>
+       <span class="n">foo</span> <span class="o">=</span> <span class="p">{</span>
+           <span class="n">long_dictionary_key</span><span class="p">:</span>
+               <span class="n">long_dictionary_value</span><span class="p">,</span>
+           <span class="o">...</span>
+       <span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>    <span class="c1"># Stuff on first line forbidden</span>
+       <span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span><span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+           <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+       <span class="n">meal</span> <span class="o">=</span> <span class="p">(</span><span class="n">spam</span><span class="p">,</span>
+           <span class="n">beans</span><span class="p">)</span>
+
+       <span class="c1"># 2-space hanging indent forbidden</span>
+       <span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span>
+         <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span> <span class="n">var_three</span><span class="p">,</span>
+         <span class="n">var_four</span><span class="p">)</span>
+
+       <span class="c1"># No hanging indent in a dictionary</span>
+       <span class="n">foo</span> <span class="o">=</span> <span class="p">{</span>
+           <span class="n">long_dictionary_key</span><span class="p">:</span>
+           <span class="n">long_dictionary_value</span><span class="p">,</span>
+           <span class="o">...</span>
+       <span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="trailing-commas-in-sequences-of-items">
+<h4>3.4.1 Trailing commas in sequences of items?<a class="headerlink" href="#trailing-commas-in-sequences-of-items" title="Permalink to this headline">¶</a></h4>
+<p>Trailing commas in sequences of items are recommended only when the closing container token <code class="docutils literal notranslate"><span class="pre">]</span></code>, <code class="docutils literal notranslate"><span class="pre">)</span></code>, or <code class="docutils literal notranslate"><span class="pre">}</span></code> does not appear on the same line as the final element. The presence of a trailing comma is also used as a hint to our Python code auto-formatter <a class="reference external" href="https://github.com/google/yapf/">YAPF</a> to direct it to auto-format the container of items to one item per line when the <code class="docutils literal notranslate"><span class="pre">,</span></code> after the final element is present.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>   <span class="n">golomb3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">Yes</span><span class="p">:</span>   <span class="n">golomb4</span> <span class="o">=</span> <span class="p">[</span>
+           <span class="mi">0</span><span class="p">,</span>
+           <span class="mi">1</span><span class="p">,</span>
+           <span class="mi">4</span><span class="p">,</span>
+           <span class="mi">6</span><span class="p">,</span>
+       <span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>    <span class="n">golomb4</span> <span class="o">=</span> <span class="p">[</span>
+           <span class="mi">0</span><span class="p">,</span>
+           <span class="mi">1</span><span class="p">,</span>
+           <span class="mi">4</span><span class="p">,</span>
+           <span class="mi">6</span>
+       <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="blank-lines">
+<h3>3.5 Blank Lines<a class="headerlink" href="#blank-lines" title="Permalink to this headline">¶</a></h3>
+<p>Two blank lines between top-level definitions, be they function or class definitions. One blank line between method definitions and between the <code class="docutils literal notranslate"><span class="pre">class</span></code> line and the first method. No blank line following a <code class="docutils literal notranslate"><span class="pre">def</span></code> line. Use single blank lines as you judge appropriate within functions or methods.</p>
 </div>
 <div class="section" id="comments-and-docstrings">
 <h3>3.8 Comments and Docstrings<a class="headerlink" href="#comments-and-docstrings" title="Permalink to this headline">¶</a></h3>
@@ -597,6 +677,35 @@
 <p>Comments should be as readable as narrative text, with proper capitalization and punctuation. In many cases, complete sentences are more readable than sentence fragments. Shorter comments, such as comments at the end of a line of code, can sometimes be less formal, but you should be consistent with your style.</p>
 <p>Although it can be frustrating to have a code reviewer point out that you are using a comma when you should be using a semicolon, it is very important that source code maintain a high level of clarity and readability. Proper punctuation, spelling, and grammar help with that goal.</p>
 </div>
+</div>
+<div class="section" id="id15">
+<h3>3.9 Classes<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>If a class inherits from no other base classes, explicitly inherit from <code class="docutils literal notranslate"><span class="pre">object</span></code>. This also applies to nested classes.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="k">class</span> <span class="nc">SampleClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+         <span class="k">pass</span>
+
+
+     <span class="k">class</span> <span class="nc">OuterClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+         <span class="k">class</span> <span class="nc">InnerClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+             <span class="k">pass</span>
+
+
+     <span class="k">class</span> <span class="nc">ChildClass</span><span class="p">(</span><span class="n">ParentClass</span><span class="p">):</span>
+         <span class="sd">&quot;&quot;&quot;Explicitly inherits from another class already.&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span> <span class="k">class</span> <span class="nc">SampleClass</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+
+    <span class="k">class</span> <span class="nc">OuterClass</span><span class="p">:</span>
+
+        <span class="k">class</span> <span class="nc">InnerClass</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Inheriting from <code class="docutils literal notranslate"><span class="pre">object</span></code> is needed to make properties work properly in Python 2 and can protect your code from potential incompatibility with Python 3. It also defines special methods that implement the default semantics of objects including <code class="docutils literal notranslate"><span class="pre">__new__</span></code>, <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, <code class="docutils literal notranslate"><span class="pre">__delattr__</span></code>, <code class="docutils literal notranslate"><span class="pre">__getattribute__</span></code>, <code class="docutils literal notranslate"><span class="pre">__setattr__</span></code>, <code class="docutils literal notranslate"><span class="pre">__hash__</span></code>, <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>, and <code class="docutils literal notranslate"><span class="pre">__str__</span></code>.</p>
 </div>
 </div>
 </div>
