@@ -231,3 +231,199 @@ Exceptions must follow certain conditions:
       raise Error()
     except Error as error:
       pass
+
+2.5 Global variables
+^^^^^^^^^^^^^^^^^^^^
+
+Avoid global variables.
+
+2.5.1 Definition
+""""""""""""""""
+
+Variables that are declared at the module level or as class attributes.
+
+2.5.2 Pros
+""""""""""
+
+Occasionally useful.
+
+2.5.3 Cons
+""""""""""
+
+Has the potential to change module behavior during the import, because assignments to global variables are done when the module is first imported.
+
+2.5.4 Decision
+""""""""""""""
+
+Avoid global variables.
+
+While they are technically variables, module-level constants are permitted and encouraged. For example: ``MAX_HOLY_HANDGRENADE_COUNT = 3``. Constants must be named using all caps with underscores. See Naming below.
+
+If needed, globals should be declared at the module level and made internal to the module by prepending an ``_`` to the name. External access must be done through public module-level functions. See Naming below.
+
+2.6 Nested/Local/Inner Classes and Functions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Nested local functions or classes are fine when used to close over a local variable. Inner classes are fine.
+
+2.6.1 Definition
+""""""""""""""""
+
+A class can be defined inside of a method, function, or class. A function can be defined inside a method or function. Nested functions have read-only access to variables defined in enclosing scopes.
+
+2.6.2 Pros
+""""""""""
+
+Allows definition of utility classes and functions that are only used inside of a very limited scope. Very `ADT <http://www.google.com/url?sa=D&q=http://en.wikipedia.org/wiki/Abstract_data_type>`_-y. Commonly used for implementing decorators.
+
+2.6.3 Cons
+""""""""""
+
+Instances of nested or local classes cannot be pickled. Nested functions and classes cannot be directly tested. Nesting can make your outer function longer and less readable.
+
+2.6.4 Decision
+""""""""""""""
+
+They are fine with some caveats. Avoid nested functions or classes except when closing over a local value. Do not nest a function just to hide it from users of a module. Instead, prefix its name with an _ at the module level so that it can still be accessed by tests.
+
+2.7 Comprehensions & Generator Expressions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Okay to use for simple cases.
+
+2.7.1 Definition
+""""""""""""""""
+
+List, Dict, and Set comprehensions as well as generator expressions provide a concise and efficient way to create container types and iterators without resorting to the use of traditional loops, ``map()``, ``filter()``, or ``lambda``.
+
+2.7.2 Pros
+""""""""""
+
+Simple comprehensions can be clearer and simpler than other dict, list, or set creation techniques. Generator expressions can be very efficient, since they avoid the creation of a list entirely.
+
+2.7.3 Cons
+""""""""""
+
+Complicated comprehensions or generator expressions can be hard to read.
+
+2.7.4 Decision
+""""""""""""""
+
+Okay to use for simple cases. Each portion must fit on one line: mapping expression, ``for`` clause, filter expression. Multiple ``for`` clauses or filter expressions are not permitted. Use loops instead when things get more complicated.
+
+.. code-block:: python
+
+    Yes:
+      result = [mapping_expr for value in iterable if filter_expr]
+
+      result = [{'key': value} for value in iterable
+                if a_long_filter_expression(value)]
+
+      result = [complicated_transform(x)
+                for x in iterable if predicate(x)]
+
+      descriptive_name = [
+          transform({'key': key, 'value': value}, color='black')
+          for key, value in generate_iterable(some_input)
+          if complicated_condition_is_met(key, value)
+      ]
+
+      result = []
+      for x in range(10):
+          for y in range(5):
+              if x * y > 10:
+                  result.append((x, y))
+
+      return {x: complicated_transform(x)
+              for x in long_generator_function(parameter)
+              if x is not None}
+
+      squares_generator = (x**2 for x in range(10))
+
+      unique_names = {user.name for user in users if user is not None}
+
+      eat(jelly_bean for jelly_bean in jelly_beans
+          if jelly_bean.color == 'black')
+
+.. code-block:: python
+
+    No:
+      result = [complicated_transform(
+                    x, some_argument=x+1)
+                for x in iterable if predicate(x)]
+
+      result = [(x, y) for x in range(10) for y in range(5) if x * y > 10]
+
+      return ((x, y, z)
+              for x in xrange(5)
+              for y in xrange(5)
+              if x != y
+              for z in xrange(5)
+              if y != z)
+
+2.8 Default Iterators and Operators
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use default iterators and operators for types that support them, like lists, dictionaries, and files.
+
+2.8.1 Definition
+""""""""""""""""
+
+Container types, like dictionaries and lists, define default iterators and membership test operators (“in” and “not in”).
+
+2.8.2 Pros
+""""""""""
+
+The default iterators and operators are simple and efficient. They express the operation directly, without extra method calls. A function that uses default operators is generic. It can be used with any type that supports the operation.
+
+2.8.3 Cons
+""""""""""
+
+You can’t tell the type of objects by reading the method names (e.g. has_key() means a dictionary). This is also an advantage.
+
+2.8.4 Decision
+""""""""""""""
+
+Use default iterators and operators for types that support them, like lists, dictionaries, and files. The built-in types define iterator methods, too. Prefer these methods to methods that return lists, except that you should not mutate a container while iterating over it. Never use Python 2 specific iteration methods such as ``dict.iter*()`` unless necessary.
+
+.. code-block:: python
+
+    Yes:  for key in adict: ...
+          if key not in adict: ...
+          if obj in alist: ...
+          for line in afile: ...
+          for k, v in adict.items(): ...
+          for k, v in six.iteritems(adict): ...
+
+.. code-block:: python
+
+    No:   for key in adict.keys(): ...
+          if not adict.has_key(key): ...
+          for line in afile.readlines(): ...
+          for k, v in dict.iteritems(): ...
+
+2.9 Generators
+^^^^^^^^^^^^^^
+
+Use generators as needed.
+
+2.9.1 Definition
+""""""""""""""""
+
+A generator function returns an iterator that yields a value each time it executes a yield statement. After it yields a value, the runtime state of the generator function is suspended until the next value is needed.
+
+2.9.2 Pros
+""""""""""
+
+Simpler code, because the state of local variables and control flow are preserved for each call. A generator uses less memory than a function that creates an entire list of values at once.
+
+2.9.3 Cons
+""""""""""
+
+None.
+
+2.9.4 Decision
+""""""""""""""
+
+Fine. Use “Yields:” rather than “Returns:” in the docstring for generator functions.
+
