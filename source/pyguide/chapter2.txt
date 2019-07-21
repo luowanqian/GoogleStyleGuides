@@ -427,3 +427,55 @@ None.
 
 Fine. Use “Yields:” rather than “Returns:” in the docstring for generator functions.
 
+2.10 Lambda Functions
+^^^^^^^^^^^^^^^^^^^^^
+
+Okay for one-liners.
+
+2.10.1 Definition
+"""""""""""""""""
+
+Lambdas define anonymous functions in an expression, as opposed to a statement. They are often used to define callbacks or operators for higher-order functions like ``map()`` and ``filter()``.
+
+2.10.2 Pros
+"""""""""""
+
+Convenient.
+
+2.10.3 Cons
+"""""""""""
+
+Harder to read and debug than local functions. The lack of names means stack traces are more difficult to understand. Expressiveness is limited because the function may only contain an expression.
+
+2.10.4 Decision
+"""""""""""""""
+
+Okay to use them for one-liners. If the code inside the lambda function is longer than 60-80 chars, it’s probably better to define it as a regular nested function.
+
+For common operations like multiplication, use the functions from the operator module instead of lambda functions. For example, prefer ``operator.mul`` to ``lambda x, y: x * y``.
+
+2.11 Conditional Expressions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Okay for one-liners.
+
+2.11.1 Definition
+"""""""""""""""""
+
+Conditional expressions (sometimes called a “ternary operator”) are mechanisms that provide a shorter syntax for if statements. For example: ``x = 1 if cond else 2``.
+
+2.11.2 Pros
+"""""""""""
+
+Shorter and more convenient than an if statement.
+
+2.11.3 Cons
+"""""""""""
+
+May be harder to read than an if statement. The condition may be difficult to locate if the expression is long.
+
+
+2.11.4 Decision
+"""""""""""""""
+
+Okay to use for one-liners. In other cases prefer to use a complete if statement.

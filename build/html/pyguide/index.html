@@ -146,6 +146,20 @@
 <li class="toctree-l4"><a class="reference internal" href="#id32">2.9.4 Decision</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#lambda-functions">2.10 Lambda Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id33">2.10.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id34">2.10.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id35">2.10.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id36">2.10.4 Decision</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#conditional-expressions">2.11 Conditional Expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id37">2.11.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id38">2.11.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id39">2.11.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id40">2.11.4 Decision</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#python-style-rules">3. Python Style Rules</a><ul>
@@ -166,7 +180,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#punctuation-spelling-and-grammar">3.8.6 Punctuation, Spelling and Grammar</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id35">3.9 Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id43">3.9 Classes</a></li>
 </ul>
 </li>
 </ul>
@@ -598,6 +612,47 @@
 <p>Fine. Use “Yields:” rather than “Returns:” in the docstring for generator functions.</p>
 </div>
 </div>
+<div class="section" id="lambda-functions">
+<h3>2.10 Lambda Functions<a class="headerlink" href="#lambda-functions" title="Permalink to this headline">¶</a></h3>
+<p>Okay for one-liners.</p>
+<div class="section" id="id33">
+<h4>2.10.1 Definition<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
+<p>Lambdas define anonymous functions in an expression, as opposed to a statement. They are often used to define callbacks or operators for higher-order functions like <code class="docutils literal notranslate"><span class="pre">map()</span></code> and <code class="docutils literal notranslate"><span class="pre">filter()</span></code>.</p>
+</div>
+<div class="section" id="id34">
+<h4>2.10.2 Pros<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h4>
+<p>Convenient.</p>
+</div>
+<div class="section" id="id35">
+<h4>2.10.3 Cons<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
+<p>Harder to read and debug than local functions. The lack of names means stack traces are more difficult to understand. Expressiveness is limited because the function may only contain an expression.</p>
+</div>
+<div class="section" id="id36">
+<h4>2.10.4 Decision<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+<p>Okay to use them for one-liners. If the code inside the lambda function is longer than 60-80 chars, it’s probably better to define it as a regular nested function.</p>
+<p>For common operations like multiplication, use the functions from the operator module instead of lambda functions. For example, prefer <code class="docutils literal notranslate"><span class="pre">operator.mul</span></code> to <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">x,</span> <span class="pre">y:</span> <span class="pre">x</span> <span class="pre">*</span> <span class="pre">y</span></code>.</p>
+</div>
+</div>
+<div class="section" id="conditional-expressions">
+<h3>2.11 Conditional Expressions<a class="headerlink" href="#conditional-expressions" title="Permalink to this headline">¶</a></h3>
+<p>Okay for one-liners.</p>
+<div class="section" id="id37">
+<h4>2.11.1 Definition<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
+<p>Conditional expressions (sometimes called a “ternary operator”) are mechanisms that provide a shorter syntax for if statements. For example: <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">if</span> <span class="pre">cond</span> <span class="pre">else</span> <span class="pre">2</span></code>.</p>
+</div>
+<div class="section" id="id38">
+<h4>2.11.2 Pros<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h4>
+<p>Shorter and more convenient than an if statement.</p>
+</div>
+<div class="section" id="id39">
+<h4>2.11.3 Cons<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h4>
+<p>May be harder to read than an if statement. The condition may be difficult to locate if the expression is long.</p>
+</div>
+<div class="section" id="id40">
+<h4>2.11.4 Decision<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h4>
+<p>Okay to use for one-liners. In other cases prefer to use a complete if statement.</p>
+</div>
+</div>
 </div>
 <div class="section" id="python-style-rules">
 <h2>3. Python Style Rules<a class="headerlink" href="#python-style-rules" title="Permalink to this headline">¶</a></h2>
@@ -606,7 +661,7 @@
 <p>Do not terminate your lines with semicolons, and do not use semicolons to put two statements on the same line.</p>
 </div>
 <div class="section" id="line-length">
-<span id="id33"></span><h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
+<span id="id41"></span><h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
 <p>Maximum line length is 80 characters.</p>
 <p>Exceptions:</p>
 <ul class="simple">
@@ -687,7 +742,7 @@
 </div>
 </div>
 <div class="section" id="indentation">
-<span id="id34"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
+<span id="id42"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
 <p>Indent your code blocks with 4 spaces.</p>
 <p>Never use tabs or mix tabs and spaces. In cases of implied line continuation, you should align wrapped elements either vertically, as per the examples in the <a class="reference internal" href="#line-length"><span class="std std-ref">line length</span></a> section; or using a hanging indent of 4 spaces, in which case there should be nothing after the open parenthesis or bracket on the first line.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>   <span class="c1"># Aligned with opening delimiter</span>
@@ -877,8 +932,8 @@
 <p>Although it can be frustrating to have a code reviewer point out that you are using a comma when you should be using a semicolon, it is very important that source code maintain a high level of clarity and readability. Proper punctuation, spelling, and grammar help with that goal.</p>
 </div>
 </div>
-<div class="section" id="id35">
-<h3>3.9 Classes<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id43">
+<h3>3.9 Classes<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
 <p>If a class inherits from no other base classes, explicitly inherit from <code class="docutils literal notranslate"><span class="pre">object</span></code>. This also applies to nested classes.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="k">class</span> <span class="nc">SampleClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
          <span class="k">pass</span>
