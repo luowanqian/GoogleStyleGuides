@@ -479,3 +479,121 @@ May be harder to read than an if statement. The condition may be difficult to lo
 """""""""""""""
 
 Okay to use for one-liners. In other cases prefer to use a complete if statement.
+
+2.12 Default Argument Values
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Okay in most cases.
+
+2.12.1 Definition
+"""""""""""""""""
+
+You can specify values for variables at the end of a function’s parameter list, e.g., ``def foo(a, b=0):``. If ``foo`` is called with only one argument, ``b`` is set to 0. If it is called with two arguments, ``b`` has the value of the second argument.
+
+2.12.2 Pros
+"""""""""""
+
+Often you have a function that uses lots of default values, but-rarely-you want to override the defaults. Default argument values provide an easy way to do this, without having to define lots of functions for the rare exceptions. Also, Python does not support overloaded methods/functions and default arguments are an easy way of “faking” the overloading behavior.
+
+2.12.3 Cons
+"""""""""""
+
+Default arguments are evaluated once at module load time. This may cause problems if the argument is a mutable object such as a list or a dictionary. If the function modifies the object (e.g., by appending an item to a list), the default value is modified.
+
+2.12.4 Decision
+"""""""""""""""
+
+Okay to use with the following caveat:
+
+Do not use mutable objects as default values in the function or method definition.
+
+.. code-block:: python
+
+    Yes: def foo(a, b=None):
+             if b is None:
+                 b = []
+    Yes: def foo(a, b: Optional[Sequence] = None):
+             if b is None:
+                 b = []
+    Yes: def foo(a, b: Sequence = ()):  # Empty tuple OK since tuples are immutable
+             ...
+
+.. code-block:: python
+
+    No:  def foo(a, b=[]):
+             ...
+    No:  def foo(a, b=time.time()):  # The time the module was loaded???
+             ...
+    No:  def foo(a, b=FLAGS.my_thing):  # sys.argv has not yet been parsed...
+             ...
+
+2.13 Properties
+^^^^^^^^^^^^^^^
+
+Use properties for accessing or setting data where you would normally have used simple, lightweight accessor or setter methods.
+
+2.13.1 Definition
+"""""""""""""""""
+
+A way to wrap method calls for getting and setting an attribute as a standard attribute access when the computation is lightweight.
+
+2.13.2 Pros
+"""""""""""
+
+Readability is increased by eliminating explicit get and set method calls for simple attribute access. Allows calculations to be lazy. Considered the Pythonic way to maintain the interface of a class. In terms of performance, allowing properties bypasses needing trivial accessor methods when a direct variable access is reasonable. This also allows accessor methods to be added in the future without breaking the interface.
+
+2.13.3 Cons
+"""""""""""
+
+Must inherit from ``object`` in Python 2. Can hide side-effects much like operator overloading. Can be confusing for subclasses.
+
+2.13.4 Decision
+"""""""""""""""
+
+Use properties in new code to access or set data where you would normally have used simple, lightweight accessor or setter methods. Properties should be created with the ``@property`` decorator.
+
+Inheritance with properties can be non-obvious if the property itself is not overridden. Thus one must make sure that accessor methods are called indirectly to ensure methods overridden in subclasses are called by the property (using the Template Method DP).
+
+.. code-block:: python
+
+    Yes: import math
+
+         class Square(object):
+             """A square with two properties: a writable area and a read-only perimeter.
+
+             To use:
+             >>> sq = Square(3)
+             >>> sq.area
+             9
+             >>> sq.perimeter
+             12
+             >>> sq.area = 16
+             >>> sq.side
+             4
+             >>> sq.perimeter
+             16
+             """
+
+             def __init__(self, side):
+                 self.side = side
+
+             @property
+             def area(self):
+                 """Gets or sets the area of the square."""
+                 return self._get_area()
+
+             @area.setter
+             def area(self, area):
+                 return self._set_area(area)
+
+             def _get_area(self):
+                 """Indirect accessor to calculate the 'area' property."""
+                 return self.side ** 2
+
+             def _set_area(self, area):
+                 """Indirect setter to set the 'area' property."""
+                 self.side = math.sqrt(area)
+
+             @property
+             def perimeter(self):
+                 return self.side * 4

@@ -160,6 +160,20 @@
 <li class="toctree-l4"><a class="reference internal" href="#id40">2.11.4 Decision</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#default-argument-values">2.12 Default Argument Values</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id41">2.12.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id42">2.12.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id43">2.12.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id44">2.12.4 Decision</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#properties">2.13 Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id45">2.13.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id46">2.13.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id47">2.13.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id48">2.13.4 Decision</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#python-style-rules">3. Python Style Rules</a><ul>
@@ -180,7 +194,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#punctuation-spelling-and-grammar">3.8.6 Punctuation, Spelling and Grammar</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id43">3.9 Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id51">3.9 Classes</a></li>
 </ul>
 </li>
 </ul>
@@ -653,6 +667,109 @@
 <p>Okay to use for one-liners. In other cases prefer to use a complete if statement.</p>
 </div>
 </div>
+<div class="section" id="default-argument-values">
+<h3>2.12 Default Argument Values<a class="headerlink" href="#default-argument-values" title="Permalink to this headline">¶</a></h3>
+<p>Okay in most cases.</p>
+<div class="section" id="id41">
+<h4>2.12.1 Definition<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h4>
+<p>You can specify values for variables at the end of a function’s parameter list, e.g., <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">foo(a,</span> <span class="pre">b=0):</span></code>. If <code class="docutils literal notranslate"><span class="pre">foo</span></code> is called with only one argument, <code class="docutils literal notranslate"><span class="pre">b</span></code> is set to 0. If it is called with two arguments, <code class="docutils literal notranslate"><span class="pre">b</span></code> has the value of the second argument.</p>
+</div>
+<div class="section" id="id42">
+<h4>2.12.2 Pros<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h4>
+<p>Often you have a function that uses lots of default values, but-rarely-you want to override the defaults. Default argument values provide an easy way to do this, without having to define lots of functions for the rare exceptions. Also, Python does not support overloaded methods/functions and default arguments are an easy way of “faking” the overloading behavior.</p>
+</div>
+<div class="section" id="id43">
+<h4>2.12.3 Cons<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
+<p>Default arguments are evaluated once at module load time. This may cause problems if the argument is a mutable object such as a list or a dictionary. If the function modifies the object (e.g., by appending an item to a list), the default value is modified.</p>
+</div>
+<div class="section" id="id44">
+<h4>2.12.4 Decision<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h4>
+<p>Okay to use with the following caveat:</p>
+<p>Do not use mutable objects as default values in the function or method definition.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+             <span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">Yes</span><span class="p">:</span> <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+             <span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">Yes</span><span class="p">:</span> <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Sequence</span> <span class="o">=</span> <span class="p">()):</span>  <span class="c1"># Empty tuple OK since tuples are immutable</span>
+         <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>  <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="p">[]):</span>
+         <span class="o">...</span>
+<span class="n">No</span><span class="p">:</span>  <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()):</span>  <span class="c1"># The time the module was loaded???</span>
+         <span class="o">...</span>
+<span class="n">No</span><span class="p">:</span>  <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">my_thing</span><span class="p">):</span>  <span class="c1"># sys.argv has not yet been parsed...</span>
+         <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="properties">
+<h3>2.13 Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h3>
+<p>Use properties for accessing or setting data where you would normally have used simple, lightweight accessor or setter methods.</p>
+<div class="section" id="id45">
+<h4>2.13.1 Definition<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h4>
+<p>A way to wrap method calls for getting and setting an attribute as a standard attribute access when the computation is lightweight.</p>
+</div>
+<div class="section" id="id46">
+<h4>2.13.2 Pros<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h4>
+<p>Readability is increased by eliminating explicit get and set method calls for simple attribute access. Allows calculations to be lazy. Considered the Pythonic way to maintain the interface of a class. In terms of performance, allowing properties bypasses needing trivial accessor methods when a direct variable access is reasonable. This also allows accessor methods to be added in the future without breaking the interface.</p>
+</div>
+<div class="section" id="id47">
+<h4>2.13.3 Cons<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h4>
+<p>Must inherit from <code class="docutils literal notranslate"><span class="pre">object</span></code> in Python 2. Can hide side-effects much like operator overloading. Can be confusing for subclasses.</p>
+</div>
+<div class="section" id="id48">
+<h4>2.13.4 Decision<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h4>
+<p>Use properties in new code to access or set data where you would normally have used simple, lightweight accessor or setter methods. Properties should be created with the <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code> decorator.</p>
+<p>Inheritance with properties can be non-obvious if the property itself is not overridden. Thus one must make sure that accessor methods are called indirectly to ensure methods overridden in subclasses are called by the property (using the Template Method DP).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">math</span>
+
+     <span class="k">class</span> <span class="nc">Square</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+         <span class="sd">&quot;&quot;&quot;A square with two properties: a writable area and a read-only perimeter.</span>
+
+<span class="sd">         To use:</span>
+<span class="sd">         &gt;&gt;&gt; sq = Square(3)</span>
+<span class="sd">         &gt;&gt;&gt; sq.area</span>
+<span class="sd">         9</span>
+<span class="sd">         &gt;&gt;&gt; sq.perimeter</span>
+<span class="sd">         12</span>
+<span class="sd">         &gt;&gt;&gt; sq.area = 16</span>
+<span class="sd">         &gt;&gt;&gt; sq.side</span>
+<span class="sd">         4</span>
+<span class="sd">         &gt;&gt;&gt; sq.perimeter</span>
+<span class="sd">         16</span>
+<span class="sd">         &quot;&quot;&quot;</span>
+
+         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="p">):</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">=</span> <span class="n">side</span>
+
+         <span class="nd">@property</span>
+         <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+             <span class="sd">&quot;&quot;&quot;Gets or sets the area of the square.&quot;&quot;&quot;</span>
+             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_area</span><span class="p">()</span>
+
+         <span class="nd">@area.setter</span>
+         <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">area</span><span class="p">):</span>
+             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_area</span><span class="p">(</span><span class="n">area</span><span class="p">)</span>
+
+         <span class="k">def</span> <span class="nf">_get_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+             <span class="sd">&quot;&quot;&quot;Indirect accessor to calculate the &#39;area&#39; property.&quot;&quot;&quot;</span>
+             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">**</span> <span class="mi">2</span>
+
+         <span class="k">def</span> <span class="nf">_set_area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">area</span><span class="p">):</span>
+             <span class="sd">&quot;&quot;&quot;Indirect setter to set the &#39;area&#39; property.&quot;&quot;&quot;</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">area</span><span class="p">)</span>
+
+         <span class="nd">@property</span>
+         <span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">*</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="python-style-rules">
 <h2>3. Python Style Rules<a class="headerlink" href="#python-style-rules" title="Permalink to this headline">¶</a></h2>
@@ -661,7 +778,7 @@
 <p>Do not terminate your lines with semicolons, and do not use semicolons to put two statements on the same line.</p>
 </div>
 <div class="section" id="line-length">
-<span id="id41"></span><h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
+<span id="id49"></span><h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
 <p>Maximum line length is 80 characters.</p>
 <p>Exceptions:</p>
 <ul class="simple">
@@ -742,7 +859,7 @@
 </div>
 </div>
 <div class="section" id="indentation">
-<span id="id42"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
+<span id="id50"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
 <p>Indent your code blocks with 4 spaces.</p>
 <p>Never use tabs or mix tabs and spaces. In cases of implied line continuation, you should align wrapped elements either vertically, as per the examples in the <a class="reference internal" href="#line-length"><span class="std std-ref">line length</span></a> section; or using a hanging indent of 4 spaces, in which case there should be nothing after the open parenthesis or bracket on the first line.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>   <span class="c1"># Aligned with opening delimiter</span>
@@ -932,8 +1049,8 @@
 <p>Although it can be frustrating to have a code reviewer point out that you are using a comma when you should be using a semicolon, it is very important that source code maintain a high level of clarity and readability. Proper punctuation, spelling, and grammar help with that goal.</p>
 </div>
 </div>
-<div class="section" id="id43">
-<h3>3.9 Classes<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id51">
+<h3>3.9 Classes<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
 <p>If a class inherits from no other base classes, explicitly inherit from <code class="docutils literal notranslate"><span class="pre">object</span></code>. This also applies to nested classes.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="k">class</span> <span class="nc">SampleClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
          <span class="k">pass</span>
