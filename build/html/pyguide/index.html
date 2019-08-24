@@ -174,6 +174,18 @@
 <li class="toctree-l4"><a class="reference internal" href="#id48">2.13.4 Decision</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#true-false-evaluations">2.14 True/False evaluations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id49">2.14.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id50">2.14.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id51">2.14.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id52">2.14.4 Decision</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deprecated-language-features">2.15 Deprecated Language Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id53">2.15.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id54">2.15.2 Decision</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#python-style-rules">3. Python Style Rules</a><ul>
@@ -194,7 +206,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#punctuation-spelling-and-grammar">3.8.6 Punctuation, Spelling and Grammar</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id51">3.9 Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id57">3.9 Classes</a></li>
 </ul>
 </li>
 </ul>
@@ -770,6 +782,90 @@
 </div>
 </div>
 </div>
+<div class="section" id="true-false-evaluations">
+<h3>2.14 True/False evaluations<a class="headerlink" href="#true-false-evaluations" title="Permalink to this headline">¶</a></h3>
+<p>Use the “implicit” false if at all possible.</p>
+<div class="section" id="id49">
+<h4>2.14.1 Definition<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h4>
+<p>Python evaluates certain values as False when in a boolean context. A quick “rule of thumb” is that all “empty” values are considered false, so <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">None,</span> <span class="pre">[],</span> <span class="pre">{},</span> <span class="pre">''</span></code> all evaluate as false in a boolean context.</p>
+</div>
+<div class="section" id="id50">
+<h4>2.14.2 Pros<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h4>
+<p>Conditions using Python booleans are easier to read and less error-prone. In most cases, they’re also faster.</p>
+</div>
+<div class="section" id="id51">
+<h4>2.14.3 Cons<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h4>
+<p>May look strange to C/C++ developers.</p>
+</div>
+<div class="section" id="id52">
+<h4>2.14.4 Decision<a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h4>
+<p>Use the “implicit” false if at all possible, e.g., <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">foo:</span></code> rather than <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">foo</span> <span class="pre">!=</span> <span class="pre">[]:</span></code>. There are a few caveats that you should keep in mind though:</p>
+<ul>
+<li><p>Never use <code class="docutils literal notranslate"><span class="pre">==</span></code> or <code class="docutils literal notranslate"><span class="pre">!=</span></code> to compare singletons like <code class="docutils literal notranslate"><span class="pre">None</span></code>. Use <code class="docutils literal notranslate"><span class="pre">is</span></code> or <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span></code>.</p></li>
+<li><p>Beware of writing <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x:</span></code> when you really mean <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None:</span></code>-e.g., when testing whether a variable or argument that defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> was set to some other value. The other value might be a value that’s false in a boolean context!</p></li>
+<li><p>Never compare a boolean variable to <code class="docutils literal notranslate"><span class="pre">False</span></code> using <code class="docutils literal notranslate"><span class="pre">==</span></code>. Use <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">x:</span></code> instead. If you need to distinguish <code class="docutils literal notranslate"><span class="pre">False</span></code> from <code class="docutils literal notranslate"><span class="pre">None</span></code> then chain the expressions, such as <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">x</span> <span class="pre">and</span> <span class="pre">x</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None:</span></code>.</p></li>
+<li><p>For sequences (strings, lists, tuples), use the fact that empty sequences are false, so <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">seq:</span></code> and <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">seq:</span></code> are preferable to <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">len(seq):</span></code> and <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">len(seq):</span></code> respectively.</p></li>
+<li><p>When handling integers, implicit false may involve more risk than benefit (i.e., accidentally handling <code class="docutils literal notranslate"><span class="pre">None</span></code> as 0). You may compare a value which is known to be an integer (and is not the result of <code class="docutils literal notranslate"><span class="pre">len()</span></code>) against the integer 0.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">users</span><span class="p">:</span>
+         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;no users&#39;</span><span class="p">)</span>
+
+     <span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">handle_zero</span><span class="p">()</span>
+
+     <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">handle_multiple_of_ten</span><span class="p">()</span>
+
+     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+         <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+             <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">users</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;no users&#39;</span><span class="p">)</span>
+
+     <span class="k">if</span> <span class="n">foo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">foo</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">handle_zero</span><span class="p">()</span>
+
+     <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">handle_multiple_of_ten</span><span class="p">()</span>
+
+     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="ow">or</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</li>
+<li><p>Note that <code class="docutils literal notranslate"><span class="pre">'0'</span></code> (i.e., <code class="docutils literal notranslate"><span class="pre">0</span></code> as string) evaluates to true.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="deprecated-language-features">
+<h3>2.15 Deprecated Language Features<a class="headerlink" href="#deprecated-language-features" title="Permalink to this headline">¶</a></h3>
+<p>Use string methods instead of the <code class="docutils literal notranslate"><span class="pre">string</span></code> module where possible. Use function call syntax instead of <code class="docutils literal notranslate"><span class="pre">apply</span></code>. Use list comprehensions and <code class="docutils literal notranslate"><span class="pre">for</span></code> loops instead of <code class="docutils literal notranslate"><span class="pre">filter</span></code> and <code class="docutils literal notranslate"><span class="pre">map</span></code> when the function argument would have been an inlined lambda anyway. Use <code class="docutils literal notranslate"><span class="pre">for</span></code> loops instead of <code class="docutils literal notranslate"><span class="pre">reduce</span></code>.</p>
+<div class="section" id="id53">
+<h4>2.15.1 Definition<a class="headerlink" href="#id53" title="Permalink to this headline">¶</a></h4>
+<p>Current versions of Python provide alternative constructs that people find generally preferable.</p>
+</div>
+<div class="section" id="id54">
+<h4>2.15.2 Decision<a class="headerlink" href="#id54" title="Permalink to this headline">¶</a></h4>
+<p>We do not use any Python version which does not support these features, so there is no reason not to use the new styles.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="n">words</span> <span class="o">=</span> <span class="n">foo</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+
+     <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">my_list</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">]</span>
+
+     <span class="nb">map</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>    <span class="c1"># Ok. No inlined lambda expression.</span>
+
+     <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>  <span class="n">words</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">)</span>
+
+     <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">,</span> <span class="n">my_list</span><span class="p">))</span>
+
+     <span class="nb">apply</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="python-style-rules">
 <h2>3. Python Style Rules<a class="headerlink" href="#python-style-rules" title="Permalink to this headline">¶</a></h2>
@@ -778,7 +874,7 @@
 <p>Do not terminate your lines with semicolons, and do not use semicolons to put two statements on the same line.</p>
 </div>
 <div class="section" id="line-length">
-<span id="id49"></span><h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
+<span id="id55"></span><h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
 <p>Maximum line length is 80 characters.</p>
 <p>Exceptions:</p>
 <ul class="simple">
@@ -859,7 +955,7 @@
 </div>
 </div>
 <div class="section" id="indentation">
-<span id="id50"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
+<span id="id56"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
 <p>Indent your code blocks with 4 spaces.</p>
 <p>Never use tabs or mix tabs and spaces. In cases of implied line continuation, you should align wrapped elements either vertically, as per the examples in the <a class="reference internal" href="#line-length"><span class="std std-ref">line length</span></a> section; or using a hanging indent of 4 spaces, in which case there should be nothing after the open parenthesis or bracket on the first line.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>   <span class="c1"># Aligned with opening delimiter</span>
@@ -1049,8 +1145,8 @@
 <p>Although it can be frustrating to have a code reviewer point out that you are using a comma when you should be using a semicolon, it is very important that source code maintain a high level of clarity and readability. Proper punctuation, spelling, and grammar help with that goal.</p>
 </div>
 </div>
-<div class="section" id="id51">
-<h3>3.9 Classes<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id57">
+<h3>3.9 Classes<a class="headerlink" href="#id57" title="Permalink to this headline">¶</a></h3>
 <p>If a class inherits from no other base classes, explicitly inherit from <code class="docutils literal notranslate"><span class="pre">object</span></code>. This also applies to nested classes.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="k">class</span> <span class="nc">SampleClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
          <span class="k">pass</span>
