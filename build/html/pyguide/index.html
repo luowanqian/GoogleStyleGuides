@@ -186,6 +186,42 @@
 <li class="toctree-l4"><a class="reference internal" href="#id54">2.15.2 Decision</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#lexical-scoping">2.16 Lexical Scoping</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id55">2.16.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id56">2.16.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id57">2.16.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id58">2.16.4 Decision</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#function-and-method-decorators">2.17 Function and Method Decorators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id59">2.17.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id60">2.17.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id61">2.17.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id62">2.17.4 Decision</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#threading">2.18 Threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#power-features">2.19 Power Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id64">2.19.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id65">2.19.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id66">2.19.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id67">2.19.4 Decision</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modern-python-python-3-and-from-future-imports">2.20 Modern Python: Python 3 and from __future__ imports</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id68">2.20.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id69">2.20.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id70">2.20.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id71">2.20.4 Decision</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#type-annotated-code">2.21 Type Annotated Code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id72">2.21.1 Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id73">2.21.2 Pros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id74">2.21.3 Cons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id75">2.21.4 Decision</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#python-style-rules">3. Python Style Rules</a><ul>
@@ -206,7 +242,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#punctuation-spelling-and-grammar">3.8.6 Punctuation, Spelling and Grammar</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id57">3.9 Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id78">3.9 Classes</a></li>
 </ul>
 </li>
 </ul>
@@ -866,6 +902,171 @@
 </div>
 </div>
 </div>
+<div class="section" id="lexical-scoping">
+<h3>2.16 Lexical Scoping<a class="headerlink" href="#lexical-scoping" title="Permalink to this headline">¶</a></h3>
+<p>Okay to use.</p>
+<div class="section" id="id55">
+<h4>2.16.1 Definition<a class="headerlink" href="#id55" title="Permalink to this headline">¶</a></h4>
+<p>A nested Python function can refer to variables defined in enclosing functions, but can not assign to them. Variable bindings are resolved using lexical scoping, that is, based on the static program text. Any assignment to a name in a block will cause Python to treat all references to that name as a local variable, even if the use precedes the assignment. If a global declaration occurs, the name is treated as a global variable.</p>
+<p>An example of the use of this feature is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_adder</span><span class="p">(</span><span class="n">summand1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a function that adds numbers to a given number.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">adder</span><span class="p">(</span><span class="n">summand2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">summand1</span> <span class="o">+</span> <span class="n">summand2</span>
+
+    <span class="k">return</span> <span class="n">adder</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id56">
+<h4>2.16.2 Pros<a class="headerlink" href="#id56" title="Permalink to this headline">¶</a></h4>
+<p>Often results in clearer, more elegant code. Especially comforting to experienced Lisp and Scheme (and Haskell and ML and …) programmers.</p>
+</div>
+<div class="section" id="id57">
+<h4>2.16.3 Cons<a class="headerlink" href="#id57" title="Permalink to this headline">¶</a></h4>
+<p>Can lead to confusing bugs. Such as this example based on <a class="reference external" href="http://www.google.com/url?sa=D&amp;q=http://www.python.org/dev/peps/pep-0227/">PEP-0227</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">bar</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+    <span class="c1"># A bunch of code here</span>
+    <span class="c1"># ...</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>  <span class="c1"># Ah, i *is* local to foo, so this is what bar sees</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">bar</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>So <code class="docutils literal notranslate"><span class="pre">foo([1,</span> <span class="pre">2,</span> <span class="pre">3])</span></code> will print <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">3</span></code>, not <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">4</span></code>.</p>
+</div>
+<div class="section" id="id58">
+<h4>2.16.4 Decision<a class="headerlink" href="#id58" title="Permalink to this headline">¶</a></h4>
+<p>Okay to use.</p>
+</div>
+</div>
+<div class="section" id="function-and-method-decorators">
+<h3>2.17 Function and Method Decorators<a class="headerlink" href="#function-and-method-decorators" title="Permalink to this headline">¶</a></h3>
+<p>Use decorators judiciously when there is a clear advantage. Avoid <code class="docutils literal notranslate"><span class="pre">&#64;staticmethod</span></code> and limit use of <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code>.</p>
+<div class="section" id="id59">
+<h4>2.17.1 Definition<a class="headerlink" href="#id59" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="https://docs.python.org/3/glossary.html#term-decorator">Decorators for Functions and Methods</a> (a.k.a “the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> notation”). One common decorator is <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code>, used for converting ordinary methods into dynamically computed attributes. However, the decorator syntax allows for user-defined decorators as well. Specifically, for some function <code class="docutils literal notranslate"><span class="pre">my_decorator</span></code>, this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@my_decorator</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># method body ...</span>
+</pre></div>
+</div>
+<p>is equivalent to:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># method body ...</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">my_decorator</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id60">
+<h4>2.17.2 Pros<a class="headerlink" href="#id60" title="Permalink to this headline">¶</a></h4>
+<p>Elegantly specifies some transformation on a method; the transformation might eliminate some repetitive code, enforce invariants, etc.</p>
+</div>
+<div class="section" id="id61">
+<h4>2.17.3 Cons<a class="headerlink" href="#id61" title="Permalink to this headline">¶</a></h4>
+<p>Decorators can perform arbitrary operations on a function’s arguments or return values, resulting in surprising implicit behavior. Additionally, decorators execute at import time. Failures in decorator code are pretty much impossible to recover from.</p>
+</div>
+<div class="section" id="id62">
+<h4>2.17.4 Decision<a class="headerlink" href="#id62" title="Permalink to this headline">¶</a></h4>
+<p>Use decorators judiciously when there is a clear advantage. Decorators should follow the same import and naming guidelines as functions. Decorator pydoc should clearly state that the function is a decorator. Write unit tests for decorators.</p>
+<p>Avoid external dependencies in the decorator itself (e.g. don’t rely on files, sockets, database connections, etc.), since they might not be available when the decorator runs (at import time, perhaps from <code class="docutils literal notranslate"><span class="pre">pydoc</span></code> or other tools). A decorator that is called with valid parameters should (as much as possible) be guaranteed to succeed in all cases.</p>
+<p>Decorators are a special case of “top level code” - see main for more discussion.</p>
+<p>Never use <code class="docutils literal notranslate"><span class="pre">&#64;staticmethod</span></code> unless forced to in order to integrate with an API defined in an existing library. Write a module level function instead.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code> only when writing a named constructor or a class-specific routine that modifies necessary global state such as a process-wide cache.</p>
+</div>
+</div>
+<div class="section" id="threading">
+<h3>2.18 Threading<a class="headerlink" href="#threading" title="Permalink to this headline">¶</a></h3>
+<p>Do not rely on the atomicity of built-in types.</p>
+<p>While Python’s built-in data types such as dictionaries appear to have atomic operations, there are corner cases where they aren’t atomic (e.g. if <code class="docutils literal notranslate"><span class="pre">__hash__</span></code> or <code class="docutils literal notranslate"><span class="pre">__eq__</span></code> are implemented as Python methods) and their atomicity should not be relied upon. Neither should you rely on atomic variable assignment (since this in turn depends on dictionaries).</p>
+<p>Use the Queue module’s <code class="docutils literal notranslate"><span class="pre">Queue</span></code> data type as the preferred way to communicate data between threads. Otherwise, use the threading module and its locking primitives. Learn about the proper use of condition variables so you can use <code class="docutils literal notranslate"><span class="pre">threading.Condition</span></code> instead of using lower-level locks.</p>
+</div>
+<div class="section" id="power-features">
+<span id="id63"></span><h3>2.19 Power Features<a class="headerlink" href="#power-features" title="Permalink to this headline">¶</a></h3>
+<p>Avoid these features.</p>
+<div class="section" id="id64">
+<h4>2.19.1 Definition<a class="headerlink" href="#id64" title="Permalink to this headline">¶</a></h4>
+<p>Python is an extremely flexible language and gives you many fancy features such as custom metaclasses, access to bytecode, on-the-fly compilation, dynamic inheritance, object reparenting, import hacks, reflection (e.g. some uses of <code class="docutils literal notranslate"><span class="pre">getattr()</span></code>), modification of system internals, etc.</p>
+</div>
+<div class="section" id="id65">
+<h4>2.19.2 Pros<a class="headerlink" href="#id65" title="Permalink to this headline">¶</a></h4>
+<p>These are powerful language features. They can make your code more compact.</p>
+</div>
+<div class="section" id="id66">
+<h4>2.19.3 Cons<a class="headerlink" href="#id66" title="Permalink to this headline">¶</a></h4>
+<p>It’s very tempting to use these “cool” features when they’re not absolutely necessary. It’s harder to read, understand, and debug code that’s using unusual features underneath. It doesn’t seem that way at first (to the original author), but when revisiting the code, it tends to be more difficult than code that is longer but is straightforward.</p>
+</div>
+<div class="section" id="id67">
+<h4>2.19.4 Decision<a class="headerlink" href="#id67" title="Permalink to this headline">¶</a></h4>
+<p>Avoid these features in your code.</p>
+<p>Standard library modules and classes that internally use these features are okay to use (for example, <code class="docutils literal notranslate"><span class="pre">abc.ABCMeta</span></code>, <code class="docutils literal notranslate"><span class="pre">collections.namedtuple</span></code>, <code class="docutils literal notranslate"><span class="pre">dataclasses</span></code>, and <code class="docutils literal notranslate"><span class="pre">enum</span></code>).</p>
+</div>
+</div>
+<div class="section" id="modern-python-python-3-and-from-future-imports">
+<h3>2.20 Modern Python: Python 3 and from __future__ imports<a class="headerlink" href="#modern-python-python-3-and-from-future-imports" title="Permalink to this headline">¶</a></h3>
+<p>Python 3 is here! While not every project is ready to use it yet, all code should be written to be 3 compatible (and tested under 3 when possible).</p>
+<div class="section" id="id68">
+<h4>2.20.1 Definition<a class="headerlink" href="#id68" title="Permalink to this headline">¶</a></h4>
+<p>Python 3 is a significant change in the Python language. While existing code is often written with 2.7 in mind, there are some simple things to do to make code more explicit about its intentions and thus better prepared for use under Python 3 without modification.</p>
+</div>
+<div class="section" id="id69">
+<h4>2.20.2 Pros<a class="headerlink" href="#id69" title="Permalink to this headline">¶</a></h4>
+<p>Code written with Python 3 in mind is more explicit and easier to get running under Python 3 once all of the dependencies of your project are ready.</p>
+</div>
+<div class="section" id="id70">
+<h4>2.20.3 Cons<a class="headerlink" href="#id70" title="Permalink to this headline">¶</a></h4>
+<p>Some people find the additional boilerplate to be ugly. It’s unusual to add imports to a module that doesn’t actually require the features added by the import.</p>
+</div>
+<div class="section" id="id71">
+<h4>2.20.4 Decision<a class="headerlink" href="#id71" title="Permalink to this headline">¶</a></h4>
+<p><strong>from __future__ imports</strong></p>
+<p>Use of <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span></code> statements is encouraged. All new code should contain the following and existing code should be updated to be compatible when possible:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+</pre></div>
+</div>
+<p>If you are not already familiar with those, read up on each here: <a class="reference external" href="https://www.python.org/dev/peps/pep-0328/">absolute imports</a>, <a class="reference external" href="https://www.python.org/dev/peps/pep-0238/">new / division behavior</a>, and <a class="reference external" href="https://www.python.org/dev/peps/pep-3105/">the print function</a>.</p>
+<p>Please don’t omit or remove these imports, even if they’re not currently used in the module. It is better to always have the future imports in all files so that they are not forgotten during later edits when someone starts using such a feature.</p>
+<p>There are other <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span></code> import statements. Use them as you see fit. We do not include <code class="docutils literal notranslate"><span class="pre">unicode_literals</span></code> in our recommendations as it is not a clear win due to implicit default codec conversion consequences it introduces in many places within Python 2.7. Most code is better off with explicit use of <code class="docutils literal notranslate"><span class="pre">b''</span></code> and <code class="docutils literal notranslate"><span class="pre">u''</span></code> bytes and unicode string literals as necessary.</p>
+<p><strong>The six, future, or past libraries.</strong></p>
+<p>When your project needs to actively support use under both Python 2 and 3, use of these libraries is encouraged as you see fit. They exist to make your code cleaner and life easier.</p>
+</div>
+</div>
+<div class="section" id="type-annotated-code">
+<h3>2.21 Type Annotated Code<a class="headerlink" href="#type-annotated-code" title="Permalink to this headline">¶</a></h3>
+<p>You can annotate Python 3 code with type hints according to <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/">PEP-484</a>, and type-check the code at build time with a type checking tool like <a class="reference external" href="https://github.com/google/pytype">pytype</a>.</p>
+<p>Type annotations can be in the source or in a <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/#stub-files">stub pyi file</a>. Whenever possible, annotations should be in the source. Use pyi files for third-party or extension modules.</p>
+<div class="section" id="id72">
+<h4>2.21.1 Definition<a class="headerlink" href="#id72" title="Permalink to this headline">¶</a></h4>
+<p>Type annotations (or “type hints”) are for function or method arguments and return values:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</pre></div>
+</div>
+<p>You can also declare the type of a variable using a special comment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">SomeFunc</span><span class="p">()</span>  <span class="c1"># type: SomeType</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id73">
+<h4>2.21.2 Pros<a class="headerlink" href="#id73" title="Permalink to this headline">¶</a></h4>
+<p>Type annotations improve the readability and maintainability of your code. The type checker will convert many runtime errors to build-time errors, and reduce your ability to use <a class="reference internal" href="#power-features"><span class="std std-ref">Power Features</span></a>.</p>
+</div>
+<div class="section" id="id74">
+<h4>2.21.3 Cons<a class="headerlink" href="#id74" title="Permalink to this headline">¶</a></h4>
+<p>You will have to keep the type declarations up to date. You might see type errors that you think are valid code. Use of a <a class="reference external" href="https://github.com/google/pytype">type checker</a> may reduce your ability to use <a class="reference internal" href="#power-features"><span class="std std-ref">Power Features</span></a>.</p>
+</div>
+<div class="section" id="id75">
+<h4>2.21.4 Decision<a class="headerlink" href="#id75" title="Permalink to this headline">¶</a></h4>
+<p>This highly depends on the complexity of your project. Give it a try.</p>
+</div>
+</div>
 </div>
 <div class="section" id="python-style-rules">
 <h2>3. Python Style Rules<a class="headerlink" href="#python-style-rules" title="Permalink to this headline">¶</a></h2>
@@ -874,7 +1075,7 @@
 <p>Do not terminate your lines with semicolons, and do not use semicolons to put two statements on the same line.</p>
 </div>
 <div class="section" id="line-length">
-<span id="id55"></span><h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
+<span id="id76"></span><h3>3.2 Line length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h3>
 <p>Maximum line length is 80 characters.</p>
 <p>Exceptions:</p>
 <ul class="simple">
@@ -955,7 +1156,7 @@
 </div>
 </div>
 <div class="section" id="indentation">
-<span id="id56"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
+<span id="id77"></span><h3>3.4 Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
 <p>Indent your code blocks with 4 spaces.</p>
 <p>Never use tabs or mix tabs and spaces. In cases of implied line continuation, you should align wrapped elements either vertically, as per the examples in the <a class="reference internal" href="#line-length"><span class="std std-ref">line length</span></a> section; or using a hanging indent of 4 spaces, in which case there should be nothing after the open parenthesis or bracket on the first line.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>   <span class="c1"># Aligned with opening delimiter</span>
@@ -1145,8 +1346,8 @@
 <p>Although it can be frustrating to have a code reviewer point out that you are using a comma when you should be using a semicolon, it is very important that source code maintain a high level of clarity and readability. Proper punctuation, spelling, and grammar help with that goal.</p>
 </div>
 </div>
-<div class="section" id="id57">
-<h3>3.9 Classes<a class="headerlink" href="#id57" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id78">
+<h3>3.9 Classes<a class="headerlink" href="#id78" title="Permalink to this headline">¶</a></h3>
 <p>If a class inherits from no other base classes, explicitly inherit from <code class="docutils literal notranslate"><span class="pre">object</span></code>. This also applies to nested classes.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="k">class</span> <span class="nc">SampleClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
          <span class="k">pass</span>

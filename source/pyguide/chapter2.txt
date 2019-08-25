@@ -692,3 +692,220 @@ We do not use any Python version which does not support these features, so there
          map(lambda x: x[1], filter(lambda x: x[2] == 5, my_list))
 
          apply(fn, args, kwargs)
+
+2.16 Lexical Scoping
+^^^^^^^^^^^^^^^^^^^^
+
+Okay to use.
+
+2.16.1 Definition
+"""""""""""""""""
+
+A nested Python function can refer to variables defined in enclosing functions, but can not assign to them. Variable bindings are resolved using lexical scoping, that is, based on the static program text. Any assignment to a name in a block will cause Python to treat all references to that name as a local variable, even if the use precedes the assignment. If a global declaration occurs, the name is treated as a global variable.
+
+An example of the use of this feature is:
+
+.. code-block:: python
+
+    def get_adder(summand1):
+        """Returns a function that adds numbers to a given number."""
+        def adder(summand2):
+            return summand1 + summand2
+
+        return adder
+
+2.16.2 Pros
+"""""""""""
+
+Often results in clearer, more elegant code. Especially comforting to experienced Lisp and Scheme (and Haskell and ML and …) programmers.
+
+2.16.3 Cons
+"""""""""""
+
+Can lead to confusing bugs. Such as this example based on `PEP-0227 <http://www.google.com/url?sa=D&q=http://www.python.org/dev/peps/pep-0227/>`_:
+
+.. code-block:: python
+
+    i = 4
+    def foo(x):
+        def bar():
+            print(i, end='')
+        # ...
+        # A bunch of code here
+        # ...
+        for i in x:  # Ah, i *is* local to foo, so this is what bar sees
+            print(i, end='')
+        bar()
+
+So ``foo([1, 2, 3])`` will print ``1 2 3 3``, not ``1 2 3 4``.
+
+2.16.4 Decision
+"""""""""""""""
+
+Okay to use.
+
+2.17 Function and Method Decorators
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use decorators judiciously when there is a clear advantage. Avoid ``@staticmethod`` and limit use of ``@classmethod``.
+
+2.17.1 Definition
+"""""""""""""""""
+
+`Decorators for Functions and Methods <https://docs.python.org/3/glossary.html#term-decorator>`_ (a.k.a “the ``@`` notation”). One common decorator is ``@property``, used for converting ordinary methods into dynamically computed attributes. However, the decorator syntax allows for user-defined decorators as well. Specifically, for some function ``my_decorator``, this:
+
+.. code-block:: python
+
+    class C(object):
+        @my_decorator
+        def method(self):
+            # method body ...
+
+is equivalent to:
+
+.. code-block:: python
+
+    class C(object):
+        def method(self):
+            # method body ...
+        method = my_decorator(method)
+
+2.17.2 Pros
+"""""""""""
+
+Elegantly specifies some transformation on a method; the transformation might eliminate some repetitive code, enforce invariants, etc.
+
+2.17.3 Cons
+"""""""""""
+
+Decorators can perform arbitrary operations on a function’s arguments or return values, resulting in surprising implicit behavior. Additionally, decorators execute at import time. Failures in decorator code are pretty much impossible to recover from.
+
+2.17.4 Decision
+"""""""""""""""
+
+Use decorators judiciously when there is a clear advantage. Decorators should follow the same import and naming guidelines as functions. Decorator pydoc should clearly state that the function is a decorator. Write unit tests for decorators.
+
+Avoid external dependencies in the decorator itself (e.g. don’t rely on files, sockets, database connections, etc.), since they might not be available when the decorator runs (at import time, perhaps from ``pydoc`` or other tools). A decorator that is called with valid parameters should (as much as possible) be guaranteed to succeed in all cases.
+
+Decorators are a special case of “top level code” - see main for more discussion.
+
+Never use ``@staticmethod`` unless forced to in order to integrate with an API defined in an existing library. Write a module level function instead.
+
+Use ``@classmethod`` only when writing a named constructor or a class-specific routine that modifies necessary global state such as a process-wide cache.
+
+2.18 Threading
+^^^^^^^^^^^^^^
+
+Do not rely on the atomicity of built-in types.
+
+While Python’s built-in data types such as dictionaries appear to have atomic operations, there are corner cases where they aren’t atomic (e.g. if ``__hash__`` or ``__eq__`` are implemented as Python methods) and their atomicity should not be relied upon. Neither should you rely on atomic variable assignment (since this in turn depends on dictionaries).
+
+Use the Queue module’s ``Queue`` data type as the preferred way to communicate data between threads. Otherwise, use the threading module and its locking primitives. Learn about the proper use of condition variables so you can use ``threading.Condition`` instead of using lower-level locks.
+
+.. _2-19-Power-Features:
+
+2.19 Power Features
+^^^^^^^^^^^^^^^^^^^
+
+Avoid these features.
+
+2.19.1 Definition
+"""""""""""""""""
+Python is an extremely flexible language and gives you many fancy features such as custom metaclasses, access to bytecode, on-the-fly compilation, dynamic inheritance, object reparenting, import hacks, reflection (e.g. some uses of ``getattr()``), modification of system internals, etc.
+
+2.19.2 Pros
+"""""""""""
+
+These are powerful language features. They can make your code more compact.
+
+2.19.3 Cons
+"""""""""""
+
+It’s very tempting to use these “cool” features when they’re not absolutely necessary. It’s harder to read, understand, and debug code that’s using unusual features underneath. It doesn’t seem that way at first (to the original author), but when revisiting the code, it tends to be more difficult than code that is longer but is straightforward.
+
+2.19.4 Decision
+"""""""""""""""
+
+Avoid these features in your code.
+
+Standard library modules and classes that internally use these features are okay to use (for example, ``abc.ABCMeta``, ``collections.namedtuple``, ``dataclasses``, and ``enum``).
+
+2.20 Modern Python: Python 3 and from __future__ imports
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Python 3 is here! While not every project is ready to use it yet, all code should be written to be 3 compatible (and tested under 3 when possible).
+
+2.20.1 Definition
+"""""""""""""""""
+
+Python 3 is a significant change in the Python language. While existing code is often written with 2.7 in mind, there are some simple things to do to make code more explicit about its intentions and thus better prepared for use under Python 3 without modification.
+
+2.20.2 Pros
+"""""""""""
+
+Code written with Python 3 in mind is more explicit and easier to get running under Python 3 once all of the dependencies of your project are ready.
+
+2.20.3 Cons
+"""""""""""
+
+Some people find the additional boilerplate to be ugly. It’s unusual to add imports to a module that doesn’t actually require the features added by the import.
+
+2.20.4 Decision
+"""""""""""""""
+
+**from __future__ imports**
+
+Use of ``from __future__ import`` statements is encouraged. All new code should contain the following and existing code should be updated to be compatible when possible:
+
+.. code-block:: python
+
+    from __future__ import absolute_import
+    from __future__ import division
+    from __future__ import print_function
+
+If you are not already familiar with those, read up on each here: `absolute imports <https://www.python.org/dev/peps/pep-0328/>`_, `new / division behavior <https://www.python.org/dev/peps/pep-0238/>`_, and `the print function <https://www.python.org/dev/peps/pep-3105/>`_.
+
+Please don’t omit or remove these imports, even if they’re not currently used in the module. It is better to always have the future imports in all files so that they are not forgotten during later edits when someone starts using such a feature.
+
+There are other ``from __future__`` import statements. Use them as you see fit. We do not include ``unicode_literals`` in our recommendations as it is not a clear win due to implicit default codec conversion consequences it introduces in many places within Python 2.7. Most code is better off with explicit use of ``b''`` and ``u''`` bytes and unicode string literals as necessary.
+
+**The six, future, or past libraries.**
+
+When your project needs to actively support use under both Python 2 and 3, use of these libraries is encouraged as you see fit. They exist to make your code cleaner and life easier.
+
+2.21 Type Annotated Code
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can annotate Python 3 code with type hints according to `PEP-484 <https://www.python.org/dev/peps/pep-0484/>`_, and type-check the code at build time with a type checking tool like `pytype <https://github.com/google/pytype>`_.
+
+Type annotations can be in the source or in a `stub pyi file <https://www.python.org/dev/peps/pep-0484/#stub-files>`_. Whenever possible, annotations should be in the source. Use pyi files for third-party or extension modules.
+
+2.21.1 Definition
+"""""""""""""""""
+
+Type annotations (or “type hints”) are for function or method arguments and return values:
+
+.. code-block:: python
+
+    def func(a: int) -> List[int]:
+
+You can also declare the type of a variable using a special comment:
+
+.. code-block:: python
+
+    a = SomeFunc()  # type: SomeType
+
+2.21.2 Pros
+"""""""""""
+
+Type annotations improve the readability and maintainability of your code. The type checker will convert many runtime errors to build-time errors, and reduce your ability to use :ref:`Power Features <2-19-Power-Features>`.
+
+2.21.3 Cons
+"""""""""""
+
+You will have to keep the type declarations up to date. You might see type errors that you think are valid code. Use of a `type checker <https://github.com/google/pytype>`_ may reduce your ability to use :ref:`Power Features <2-19-Power-Features>`.
+
+2.21.4 Decision
+"""""""""""""""
+
+This highly depends on the complexity of your project. Give it a try.
