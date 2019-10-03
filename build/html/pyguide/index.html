@@ -243,6 +243,39 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id78">3.9 Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strings">3.10 Strings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#files-and-sockets">3.11 Files and Sockets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#todo-comments">3.12 TODO Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imports-formatting">3.13 Imports formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#statements">3.14 Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#access-control">3.15 Access Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#naming">3.16 Naming</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#names-to-avoid">3.16.1 Names to Avoid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naming-convention">3.16.2 Naming Convention</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#file-naming">3.16.3 File Naming</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#guidelines-derived-from-guidos-recommendations">3.16.4 Guidelines derived from Guido’s Recommendations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#main">3.17 Main</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#function-length">3.18 Function length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type-annotations">3.19 Type Annotations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general-rules">3.19.1 General Rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#line-breaking">3.19.2 Line Breaking</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#forward-declarations">3.19.3 Forward Declarations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-values">3.19.4 Default Values</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nonetype">3.19.5 NoneType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#type-aliases">3.19.6 Type Aliases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ignoring-types">3.19.7 Ignoring Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#typing-internal-variables">3.19.8 Typing internal variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tuples-vs-lists">3.19.9 Tuples vs Lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#typevar">3.19.10 TypeVar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#string-types">3.19.11 String types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#imports-for-typing">3.19.12 Imports For Typing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conditional-imports">3.19.13 Conditional Imports</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#circular-dependencies">3.19.14 Circular Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id83">3.19.15 Generics</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1374,6 +1407,597 @@
 </pre></div>
 </div>
 <p>Inheriting from <code class="docutils literal notranslate"><span class="pre">object</span></code> is needed to make properties work properly in Python 2 and can protect your code from potential incompatibility with Python 3. It also defines special methods that implement the default semantics of objects including <code class="docutils literal notranslate"><span class="pre">__new__</span></code>, <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, <code class="docutils literal notranslate"><span class="pre">__delattr__</span></code>, <code class="docutils literal notranslate"><span class="pre">__getattribute__</span></code>, <code class="docutils literal notranslate"><span class="pre">__setattr__</span></code>, <code class="docutils literal notranslate"><span class="pre">__hash__</span></code>, <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>, and <code class="docutils literal notranslate"><span class="pre">__str__</span></code>.</p>
+</div>
+<div class="section" id="strings">
+<h3>3.10 Strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">format</span></code> method or the <code class="docutils literal notranslate"><span class="pre">%</span></code> operator for formatting strings, even when the parameters are all strings. Use your best judgement to decide between <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">%</span></code> (or <code class="docutils literal notranslate"><span class="pre">format</span></code>) though.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+     <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">!&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">imperative</span><span class="p">,</span> <span class="n">expletive</span><span class="p">)</span>
+     <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;{}, {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">)</span>
+     <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;name: </span><span class="si">%s</span><span class="s1">; score: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+     <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;name: {}; score: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+     <span class="n">x</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;name: {name}; score: {n}&#39;</span>  <span class="c1"># Python 3.6+</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># use + in this case</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;{}{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># use + in this case</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="n">second</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;name: &#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;; score: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Avoid using the <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">+=</span></code> operators to accumulate a string within a loop. Since strings are immutable, this creates unnecessary temporary objects and results in quadratic rather than linear running time. Instead, add each substring to a list and <code class="docutils literal notranslate"><span class="pre">''.join</span></code> the list after the loop terminates (or, write each substring to a <code class="docutils literal notranslate"><span class="pre">io.BytesIO</span></code> buffer).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&lt;table&gt;&#39;</span><span class="p">]</span>
+     <span class="k">for</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">first_name</span> <span class="ow">in</span> <span class="n">employee_list</span><span class="p">:</span>
+         <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;tr&gt;&lt;td&gt;</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">&lt;/td&gt;&lt;/tr&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">last_name</span><span class="p">,</span> <span class="n">first_name</span><span class="p">))</span>
+     <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">)</span>
+     <span class="n">employee_table</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span> <span class="n">employee_table</span> <span class="o">=</span> <span class="s1">&#39;&lt;table&gt;&#39;</span>
+    <span class="k">for</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">first_name</span> <span class="ow">in</span> <span class="n">employee_list</span><span class="p">:</span>
+        <span class="n">employee_table</span> <span class="o">+=</span> <span class="s1">&#39;&lt;tr&gt;&lt;td&gt;</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">&lt;/td&gt;&lt;/tr&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">last_name</span><span class="p">,</span> <span class="n">first_name</span><span class="p">)</span>
+    <span class="n">employee_table</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/table&gt;&#39;</span>
+</pre></div>
+</div>
+<p>Be consistent with your choice of string quote character within a file. Pick <code class="docutils literal notranslate"><span class="pre">'</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> and stick with it. It is okay to use the other quote character on a string to avoid the need to <code class="docutils literal notranslate"><span class="pre">\\</span></code> escape within the string. <code class="docutils literal notranslate"><span class="pre">gpylint</span></code> enforces this.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>
+  <span class="n">Python</span><span class="p">(</span><span class="s1">&#39;Why are you hiding your eyes?&#39;</span><span class="p">)</span>
+  <span class="n">Gollum</span><span class="p">(</span><span class="s2">&quot;I&#39;m scared of lint errors.&quot;</span><span class="p">)</span>
+  <span class="n">Narrator</span><span class="p">(</span><span class="s1">&#39;&quot;Good!&quot; thought a happy Python reviewer.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>
+  <span class="n">Python</span><span class="p">(</span><span class="s2">&quot;Why are you hiding your eyes?&quot;</span><span class="p">)</span>
+  <span class="n">Gollum</span><span class="p">(</span><span class="s1">&#39;The lint. It burns. It burns us.&#39;</span><span class="p">)</span>
+  <span class="n">Gollum</span><span class="p">(</span><span class="s2">&quot;Always the great lint. Watching. Watching.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Prefer <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> for multi-line strings rather than <code class="docutils literal notranslate"><span class="pre">'''</span></code>. Projects may choose to use <code class="docutils literal notranslate"><span class="pre">'''</span></code> for all non-docstring multi-line strings if and only if they also use <cite>‘</cite> for regular strings. Docstrings must use <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> regardless. Note that it is often cleaner to use implicit line joining since multi-line strings do not flow with the indentation of the rest of the program:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;This is much nicer.</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="s2">&quot;Do it this way.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="n">No</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;This is pretty ugly.</span>
+<span class="s2">Don&#39;t do this.</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="files-and-sockets">
+<h3>3.11 Files and Sockets<a class="headerlink" href="#files-and-sockets" title="Permalink to this headline">¶</a></h3>
+<p>Explicitly close files and sockets when done with them.</p>
+<p>Leaving files, sockets or other file-like objects open unnecessarily has many downsides:</p>
+<ul class="simple">
+<li><p>They may consume limited system resources, such as file descriptors. Code that deals with many such objects may exhaust those resources unnecessarily if they’re not returned to the system promptly after use.</p></li>
+<li><p>Holding files open may prevent other actions such as moving or deleting them.</p></li>
+<li><p>Files and sockets that are shared throughout a program may inadvertently be read from or written to after logically being closed. If they are actually closed, attempts to read or write from them will throw exceptions, making the problem known sooner.</p></li>
+</ul>
+<p>Furthermore, while files and sockets are automatically closed when the file object is destructed, tying the lifetime of the file object to the state of the file is poor practice:</p>
+<ul class="simple">
+<li><p>There are no guarantees as to when the runtime will actually run the file’s destructor. Different Python implementations use different memory management techniques, such as delayed Garbage Collection, which may increase the object’s lifetime arbitrarily and indefinitely.</p></li>
+<li><p>Unexpected references to the file, e.g. in globals or exception tracebacks, may keep it around longer than intended.</p></li>
+</ul>
+<p>The preferred way to manage files is using the <a class="reference external" href="http://docs.python.org/reference/compound_stmts.html#the-with-statement">“with” statement</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;hello.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">hello_file</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">hello_file</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For file-like objects that do not support the “with” statement, use <code class="docutils literal notranslate"><span class="pre">contextlib.closing()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+<span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">closing</span><span class="p">(</span><span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;http://www.python.org/&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">front_page</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">front_page</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="todo-comments">
+<h3>3.12 TODO Comments<a class="headerlink" href="#todo-comments" title="Permalink to this headline">¶</a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">TODO</span></code> comments for code that is temporary, a short-term solution, or good-enough but not perfect.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">TODO</span></code> comment begins with the string <code class="docutils literal notranslate"><span class="pre">TODO</span></code> in all caps and a parenthesized name, e-mail address, or other identifier of the person or issue with the best context about the problem. This is followed by an explanation of what there is to do.</p>
+<p>The purpose is to have a consistent <code class="docutils literal notranslate"><span class="pre">TODO</span></code> format that can be searched to find out how to get more details. A <code class="docutils literal notranslate"><span class="pre">TODO</span></code> is not a commitment that the person referenced will fix the problem. Thus when you create a <code class="docutils literal notranslate"><span class="pre">TODO</span></code>, it is almost always your name that is given.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO(kl@gmail.com): Use a &quot;*&quot; here for string repetition.</span>
+<span class="c1"># TODO(Zeke) Change this to use relations.</span>
+</pre></div>
+</div>
+<p>If your <code class="docutils literal notranslate"><span class="pre">TODO</span></code> is of the form “At a future date do something” make sure that you either include a very specific date (“Fix by November 2009”) or a very specific event (“Remove this code when all clients can handle XML responses.”).</p>
+</div>
+<div class="section" id="imports-formatting">
+<h3>3.13 Imports formatting<a class="headerlink" href="#imports-formatting" title="Permalink to this headline">¶</a></h3>
+<p>Imports should be on separate lines.</p>
+<p>E.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">os</span>
+     <span class="kn">import</span> <span class="nn">sys</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>  <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+</pre></div>
+</div>
+<p>Imports are always put at the top of the file, just after any module comments and docstrings and before module globals and constants. Imports should be grouped from most generic to least generic:</p>
+<ol class="arabic simple">
+<li><p>Python standard library imports. For example:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p><a class="reference external" href="https://pypi.org/">third-party</a> module or package imports. For example:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>Code repository sub-package imports. For example:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">otherproject.ai</span> <span class="kn">import</span> <span class="n">mind</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><p>Deprecated: application-specific imports that are part of the same top level sub-package as this file. For example:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myproject.backend.hgwells</span> <span class="kn">import</span> <span class="n">time_machine</span>
+</pre></div>
+</div>
+<p>You may find older Google Python Style code doing this, but it is no longer required. <strong>New code is encouraged not to bother with this.</strong> Simply treat application-specific sub-package imports the same as other sub-package imports.</p>
+</div></blockquote>
+<p>Within each grouping, imports should be sorted lexicographically, ignoring case, according to each module’s full package path. Code may optionally place a blank line between import sections.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">queue</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
+<span class="kn">import</span> <span class="nn">bs4</span>
+<span class="kn">import</span> <span class="nn">cryptography</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">book.genres</span> <span class="kn">import</span> <span class="n">scifi</span>
+<span class="kn">from</span> <span class="nn">myproject.backend.hgwells</span> <span class="kn">import</span> <span class="n">time_machine</span>
+<span class="kn">from</span> <span class="nn">myproject.backend.state_machine</span> <span class="kn">import</span> <span class="n">main_loop</span>
+<span class="kn">from</span> <span class="nn">otherproject.ai</span> <span class="kn">import</span> <span class="n">body</span>
+<span class="kn">from</span> <span class="nn">otherproject.ai</span> <span class="kn">import</span> <span class="n">mind</span>
+<span class="kn">from</span> <span class="nn">otherproject.ai</span> <span class="kn">import</span> <span class="n">soul</span>
+
+<span class="c1"># Older style code may have these imports down here instead:</span>
+<span class="c1">#from myproject.backend.hgwells import time_machine</span>
+<span class="c1">#from myproject.backend.state_machine import main_loop</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statements">
+<h3>3.14 Statements<a class="headerlink" href="#statements" title="Permalink to this headline">¶</a></h3>
+<p>Generally only one statement per line.</p>
+<p>However, you may put the result of a test on the same line as the test only if the entire statement fits on one line. In particular, you can never do so with <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code> since the <code class="docutils literal notranslate"><span class="pre">try</span></code> and <code class="docutils literal notranslate"><span class="pre">except</span></code> can’t both fit on the same line, and you can only do so with an <code class="docutils literal notranslate"><span class="pre">if</span></code> if there is no <code class="docutils literal notranslate"><span class="pre">else</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>
+
+  <span class="k">if</span> <span class="n">foo</span><span class="p">:</span> <span class="n">bar</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>
+
+  <span class="k">if</span> <span class="n">foo</span><span class="p">:</span> <span class="n">bar</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>   <span class="n">baz</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+
+  <span class="k">try</span><span class="p">:</span>               <span class="n">bar</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span> <span class="n">baz</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+
+  <span class="k">try</span><span class="p">:</span>
+      <span class="n">bar</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span> <span class="n">baz</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="access-control">
+<h3>3.15 Access Control<a class="headerlink" href="#access-control" title="Permalink to this headline">¶</a></h3>
+<p>If an accessor function would be trivial, you should use public variables instead of accessor functions to avoid the extra cost of function calls in Python. When more functionality is added you can use <code class="docutils literal notranslate"><span class="pre">property</span></code> to keep the syntax consistent.</p>
+<p>On the other hand, if access is more complex, or the cost of accessing the variable is significant, you should use function calls (following the <a class="reference internal" href="#naming"><span class="std std-ref">Naming</span></a> guidelines) such as <code class="docutils literal notranslate"><span class="pre">get_foo()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_foo()</span></code>. If the past behavior allowed access through a property, do not bind the new accessor functions to the property. Any code still attempting to access the variable by the old method should break visibly so they are made aware of the change in complexity.</p>
+</div>
+<div class="section" id="naming">
+<span id="id79"></span><h3>3.16 Naming<a class="headerlink" href="#naming" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">module_name</span></code>, <code class="docutils literal notranslate"><span class="pre">package_name</span></code>, <code class="docutils literal notranslate"><span class="pre">ClassName</span></code>, <code class="docutils literal notranslate"><span class="pre">method_name</span></code>, <code class="docutils literal notranslate"><span class="pre">ExceptionName</span></code>, <code class="docutils literal notranslate"><span class="pre">function_name</span></code>, <code class="docutils literal notranslate"><span class="pre">GLOBAL_CONSTANT_NAME</span></code>, <code class="docutils literal notranslate"><span class="pre">global_var_name</span></code>, <code class="docutils literal notranslate"><span class="pre">instance_var_name</span></code>, <code class="docutils literal notranslate"><span class="pre">function_parameter_name</span></code>, <code class="docutils literal notranslate"><span class="pre">local_var_name</span></code>.</p>
+<p>Function names, variable names, and filenames should be descriptive; eschew abbreviation. In particular, do not use abbreviations that are ambiguous or unfamiliar to readers outside your project, and do not abbreviate by deleting letters within a word.</p>
+<p>Always use a <code class="docutils literal notranslate"><span class="pre">.py</span></code> filename extension. Never use dashes.</p>
+<div class="section" id="names-to-avoid">
+<h4>3.16.1 Names to Avoid<a class="headerlink" href="#names-to-avoid" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>single character names except for counters or iterators. You may use “e” as an exception identifier in try/except statements.</p></li>
+<li><p>dashes (-) in any package/module name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__double_leading_and_trailing_underscore__</span></code> names (reserved by Python)</p></li>
+</ul>
+</div>
+<div class="section" id="naming-convention">
+<h4>3.16.2 Naming Convention<a class="headerlink" href="#naming-convention" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>“Internal” means internal to a module, or protected or private within a class.</p></li>
+<li><p>Prepending a single underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>) has some support for protecting module variables and functions (not included with <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">module</span> <span class="pre">import</span> <span class="pre">*</span></code>). While prepending a double underscore (<code class="docutils literal notranslate"><span class="pre">__</span></code> aka “dunder”) to an instance variable or method effectively makes the variable or method private to its class (using name mangling) we discourage its use as it impacts readability and testability and isn’t really private.</p></li>
+<li><p>Place related classes and top-level functions together in a module. Unlike Java, there is no need to limit yourself to one class per module.</p></li>
+<li><p>Use CapWords for class names, but lower_with_under.py for module names. Although there are some old modules named CapWords.py, this is now discouraged because it’s confusing when the module happens to be named after a class. (“wait – did I write <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">StringIO</span></code> or <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">StringIO</span> <span class="pre">import</span> <span class="pre">StringIO</span></code>?”)</p></li>
+<li><p>Underscores may appear in unittest method names starting with <code class="docutils literal notranslate"><span class="pre">test</span></code> to separate logical components of the name, even if those components use CapWords. One possible pattern is <code class="docutils literal notranslate"><span class="pre">test&lt;MethodUnderTest&gt;_&lt;state&gt;</span></code>; for example <code class="docutils literal notranslate"><span class="pre">testPop_EmptyStack</span></code> is okay. There is no One Correct Way to name test methods.</p></li>
+</ul>
+</div>
+<div class="section" id="file-naming">
+<h4>3.16.3 File Naming<a class="headerlink" href="#file-naming" title="Permalink to this headline">¶</a></h4>
+<p>Python filenames must have a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension and must not contain dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>). This allows them to be imported and unittested. If you want an executable to be accessible without the extension, use a symbolic link or a simple bash wrapper containing <code class="docutils literal notranslate"><span class="pre">exec</span> <span class="pre">&quot;$0.py&quot;</span> <span class="pre">&quot;$&#64;&quot;</span></code>.</p>
+</div>
+<div class="section" id="guidelines-derived-from-guidos-recommendations">
+<h4>3.16.4 Guidelines derived from Guido’s Recommendations<a class="headerlink" href="#guidelines-derived-from-guidos-recommendations" title="Permalink to this headline">¶</a></h4>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Public</p></th>
+<th class="head"><p>Internal</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Packages</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lower_with_under</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Modules</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lower_with_under</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_lower_with_under</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Classes</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CapWords</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_CapWords</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Exceptions</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CapWords</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Functions</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lower_with_under()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_lower_with_under()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Global/Class Constants</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CAPS_WITH_UNDER</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_CAPS_WITH_UNDER</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Global/Class Variables</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lower_with_under</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_lower_with_under</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Instance Variables</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lower_with_under</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_lower_with_under</span></code> (protected)</p></td>
+</tr>
+<tr class="row-even"><td><p>Method Names</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lower_with_under()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_lower_with_under()</span></code> (protected)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Function/Method Parameters</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lower_with_under</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Local Variables</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lower_with_under</span></code></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>While Python supports making things private by using a leading double underscore <code class="docutils literal notranslate"><span class="pre">__</span></code> (aka. “dunder”) prefix on a name, this is discouraged. Prefer the use of a single underscore. They are easier to type, read, and to access from small unittests. Lint warnings take care of invalid access to protected members.</p>
+</div>
+</div>
+<div class="section" id="main">
+<h3>3.17 Main<a class="headerlink" href="#main" title="Permalink to this headline">¶</a></h3>
+<p>Even a file meant to be used as an executable should be importable and a mere import should not have the side effect of executing the program’s main functionality. The main functionality should be in a <code class="docutils literal notranslate"><span class="pre">main()</span></code> function.</p>
+<p>In Python, <code class="docutils literal notranslate"><span class="pre">pydoc</span></code> as well as unit tests require modules to be importable. Your code should always check <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__'</span></code> before executing your main program so that the main program is not executed when the module is imported.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="o">...</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>All code at the top level will be executed when the module is imported. Be careful not to call functions, create objects, or perform other operations that should not be executed when the file is being <code class="docutils literal notranslate"><span class="pre">pydoc</span></code> ed.</p>
+</div>
+<div class="section" id="function-length">
+<h3>3.18 Function length<a class="headerlink" href="#function-length" title="Permalink to this headline">¶</a></h3>
+<p>Prefer small and focused functions.</p>
+<p>We recognize that long functions are sometimes appropriate, so no hard limit is placed on function length. If a function exceeds about 40 lines, think about whether it can be broken up without harming the structure of the program.</p>
+<p>Even if your long function works perfectly now, someone modifying it in a few months may add new behavior. This could result in bugs that are hard to find. Keeping your functions short and simple makes it easier for other people to read and modify your code.</p>
+<p>You could find long and complicated functions when working with some code. Do not be intimidated by modifying existing code: if working with such a function proves to be difficult, you find that errors are hard to debug, or you want to use a piece of it in several different contexts, consider breaking up the function into smaller and more manageable pieces.</p>
+</div>
+<div class="section" id="type-annotations">
+<h3>3.19 Type Annotations<a class="headerlink" href="#type-annotations" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="general-rules">
+<h4>3.19.1 General Rules<a class="headerlink" href="#general-rules" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Familiarize yourself with <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/">PEP-484</a>.</p></li>
+<li><p>In methods, only annotate <code class="docutils literal notranslate"><span class="pre">self</span></code>, or <code class="docutils literal notranslate"><span class="pre">cls</span></code> if it is necessary for proper type information. e.g., <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span> <span class="pre">def</span> <span class="pre">create(cls:</span> <span class="pre">Type[T])</span> <span class="pre">-&gt;</span> <span class="pre">T:</span> <span class="pre">return</span> <span class="pre">cls()</span></code></p></li>
+<li><p>If any other variable or a returned type should not be expressed, use Any.</p></li>
+<li><p>You are not required to annotate all the functions in a module.</p>
+<ul>
+<li><p>At least annotate your public APIs.</p></li>
+<li><p>Use judgment to get to a good balance between safety and clarity on the one hand, and flexibility on the other.</p></li>
+<li><p>Annotate code that is prone to type-related errors (previous bugs or complexity).</p></li>
+<li><p>Annotate code that is hard to understand.</p></li>
+<li><p>Annotate code as it becomes stable from a types perspective. In many cases, you can annotate all the functions in mature code without losing too much flexibility.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="line-breaking">
+<h4>3.19.2 Line Breaking<a class="headerlink" href="#line-breaking" title="Permalink to this headline">¶</a></h4>
+<p>Try to follow the existing <a class="reference internal" href="#indentation"><span class="std std-ref">indentation</span></a> rules.</p>
+<p>After annotating, many function signatures will become “one parameter per line”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+              <span class="n">first_var</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+              <span class="n">second_var</span><span class="p">:</span> <span class="n">Foo</span><span class="p">,</span>
+              <span class="n">third_var</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Bar</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>Always prefer breaking between variables, and not for example between variable names and type annotations. However, if everything fits on the same line, go for it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_var</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>If the combination of the function name, the last parameter, and the return type is too long, indent by 4 in a new line.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">first_var</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">MyLongType1</span><span class="p">,</span> <span class="n">MyLongType1</span><span class="p">]:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>When the return type does not fit on the same line as the last parameter, the preferred way is to indent the parameters by 4 on a new line and align the closing parenthesis with the def.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MyLongType</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">OtherLongType</span><span class="p">,</span> <span class="n">MyLongType</span><span class="p">]:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pylint</span></code> allows you to move the closing parenthesis to a new line and align with the opening one, but this is less readable.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+              <span class="o">**</span><span class="n">kw_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MyLongType</span><span class="p">]</span>
+             <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">OtherLongType</span><span class="p">,</span> <span class="n">MyLongType</span><span class="p">]:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>As in the examples above, prefer not to break types. However, sometimes they are too long to be on a single line (try to keep sub-types unbroken).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">first_var</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">MyLongType1</span><span class="p">],</span>
+                     <span class="n">List</span><span class="p">[</span><span class="n">MyLongType2</span><span class="p">]],</span>
+    <span class="n">second_var</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span>
+        <span class="n">MyLongType3</span><span class="p">,</span> <span class="n">MyLongType4</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>If a single name and type is too long, consider using an <a class="reference internal" href="#type-aliases"><span class="std std-ref">alias</span></a> for the type. The last resort is to break after the colon and indent by 4.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span>
+    <span class="n">long_variable_name</span><span class="p">:</span>
+        <span class="n">long_module_name</span><span class="o">.</span><span class="n">LongTypeName</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span>
+    <span class="n">long_variable_name</span><span class="p">:</span> <span class="n">long_module_name</span><span class="o">.</span>
+        <span class="n">LongTypeName</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="forward-declarations">
+<h4>3.19.3 Forward Declarations<a class="headerlink" href="#forward-declarations" title="Permalink to this headline">¶</a></h4>
+<p>If you need to use a class name from the same module that is not yet defined – for example, if you need the class inside the class declaration, or if you use a class that is defined below – use a string for the class name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+               <span class="n">stack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;MyClass&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="default-values">
+<h4>3.19.4 Default Values<a class="headerlink" href="#default-values" title="Permalink to this headline">¶</a></h4>
+<p>As per <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/#other-recommendations">PEP-008</a>, use spaces around the <code class="docutils literal notranslate"><span class="pre">=</span></code> only for arguments that have both a type annotation and a default value.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nonetype">
+<h4>3.19.5 NoneType<a class="headerlink" href="#nonetype" title="Permalink to this headline">¶</a></h4>
+<p>In the Python type system, <code class="docutils literal notranslate"><span class="pre">NoneType</span></code> is a “first class” type, and for typing purposes, <code class="docutils literal notranslate"><span class="pre">None</span></code> is an alias for <code class="docutils literal notranslate"><span class="pre">NoneType</span></code>. If an argument can be <code class="docutils literal notranslate"><span class="pre">None</span></code>, it has to be declared! You can use <code class="docutils literal notranslate"><span class="pre">Union</span></code>, but if there is only one other type, use <code class="docutils literal notranslate"><span class="pre">Optional</span></code>.</p>
+<p>Use explicit <code class="docutils literal notranslate"><span class="pre">Optional</span></code> instead of implicit <code class="docutils literal notranslate"><span class="pre">Optional</span></code>. Earlier versions of PEP 484 allowed <code class="docutils literal notranslate"><span class="pre">a:</span> <span class="pre">Text</span> <span class="pre">=</span> <span class="pre">None</span></code> to be interpretted <code class="docutils literal notranslate"><span class="pre">as</span> <span class="pre">a:</span> <span class="pre">Optional[Text]</span> <span class="pre">=</span> <span class="pre">None</span></code>, but that is no longer the preferred behavior.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Yes</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Text</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Text</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+  <span class="o">...</span>
+<span class="k">def</span> <span class="nf">multiple_nullable_union</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Text</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">nullable_union</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">Text</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+  <span class="o">...</span>
+<span class="k">def</span> <span class="nf">implicit_optional</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="type-aliases">
+<span id="id81"></span><h4>3.19.6 Type Aliases<a class="headerlink" href="#type-aliases" title="Permalink to this headline">¶</a></h4>
+<p>You can declare aliases of complex types. The name of an alias should be CapWorded. If the alias is used only in this module, it should be _Private.</p>
+<p>For example, if the name of module together with the type is too long:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_ShortName</span> <span class="o">=</span> <span class="n">module_with_long_name</span><span class="o">.</span><span class="n">TypeWithLongName</span>
+<span class="n">ComplexMap</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span>
+</pre></div>
+</div>
+<p>Other examples are complex nested types and multiple return variables from a function (as a tuple).</p>
+</div>
+<div class="section" id="ignoring-types">
+<h4>3.19.7 Ignoring Types<a class="headerlink" href="#ignoring-types" title="Permalink to this headline">¶</a></h4>
+<p>You can disable type checking on a line with the special comment <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">type:</span> <span class="pre">ignore</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pytype</span></code> has a disable option for specific errors (similar to lint):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># pytype: disable=attribute-error</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="typing-internal-variables">
+<h4>3.19.8 Typing internal variables<a class="headerlink" href="#typing-internal-variables" title="Permalink to this headline">¶</a></h4>
+<p>If an internal variable has a type that is hard or impossible to infer, you can supply it as a special comment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">SomeUndecoratedFunction</span><span class="p">()</span>  <span class="c1"># type: Foo</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tuples-vs-lists">
+<h4>3.19.9 Tuples vs Lists<a class="headerlink" href="#tuples-vs-lists" title="Permalink to this headline">¶</a></h4>
+<p>Unlike Lists, which can only have a single type, Tuples can have either a single repeated type or a set number of elements with different types. The latter is commonly used as return type from a function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># type: List[int]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># type: Tuple[int, ...]</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>  <span class="c1"># type: Tuple[int, Text, float]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="typevar">
+<span id="id82"></span><h4>3.19.10 TypeVar<a class="headerlink" href="#typevar" title="Permalink to this headline">¶</a></h4>
+<p>The Python type system has <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/#generics">generics</a>. The factory function <code class="docutils literal notranslate"><span class="pre">TypeVar</span></code> is a common way to use them.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">l</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A TypeVar can be constrained:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">AddableType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;AddableType&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Text</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">AddableType</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">AddableType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AddableType</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>A common predefined type variable in the <code class="docutils literal notranslate"><span class="pre">typing</span></code> module is <code class="docutils literal notranslate"><span class="pre">AnyStr</span></code>. Use it for multiple annotations that can be <code class="docutils literal notranslate"><span class="pre">bytes</span></code> or <code class="docutils literal notranslate"><span class="pre">unicode</span></code> and must all be the same type.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">AnyStr</span>
+<span class="k">def</span> <span class="nf">check_length</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AnyStr</span><span class="p">:</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">42</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span>
+  <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="string-types">
+<h4>3.19.11 String types<a class="headerlink" href="#string-types" title="Permalink to this headline">¶</a></h4>
+<p>The proper type for annotating strings depends on what versions of Python the code is intended for.</p>
+<p>For Python 3 only code, prefer to use <code class="docutils literal notranslate"><span class="pre">str</span></code>. <code class="docutils literal notranslate"><span class="pre">Text</span></code> is also acceptable. Be consistent in using one or the other.</p>
+<p>For Python 2 compatible code, use <code class="docutils literal notranslate"><span class="pre">Text</span></code>. In some rare cases, <code class="docutils literal notranslate"><span class="pre">str</span></code> may make sense; typically to aid compatiblity when the return types aren’t the same between the two Python versions. Avoid using <code class="docutils literal notranslate"><span class="pre">unicode</span></code>: it doesn’t exist in Python 3.</p>
+<p>The reason this discreprency exists is because <code class="docutils literal notranslate"><span class="pre">str</span></code> means different things depending on the Python version.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">No</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">py2_code</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">unicode</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>For code that deals with binary data, use <code class="docutils literal notranslate"><span class="pre">bytes</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">deals_with_binary_data</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>For Python 2 compatible code that processes text data (<code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">unicode</span></code> in Python 2, <code class="docutils literal notranslate"><span class="pre">str</span></code> in Python 3), use <code class="docutils literal notranslate"><span class="pre">Text</span></code>. For Python 3 only code that process text data, prefer <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Text</span>
+<span class="o">...</span>
+<span class="k">def</span> <span class="nf">py2_compatible</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+  <span class="o">...</span>
+<span class="k">def</span> <span class="nf">py3_only</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>If the type can be either bytes or text, use <code class="docutils literal notranslate"><span class="pre">Union</span></code>, with the appropriate text type.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Union</span>
+<span class="o">...</span>
+<span class="k">def</span> <span class="nf">py2_compatible</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Text</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Text</span><span class="p">]:</span>
+  <span class="o">...</span>
+<span class="k">def</span> <span class="nf">py3_only</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>If all the string types of a function are always the same, for example if the return type is the same as the argument type in the code above, use <a class="reference internal" href="#typevar"><span class="std std-ref">AnyStr</span></a>.</p>
+<p>Writing it like this will simplify the process of porting the code to Python 3.</p>
+</div>
+<div class="section" id="imports-for-typing">
+<h4>3.19.12 Imports For Typing<a class="headerlink" href="#imports-for-typing" title="Permalink to this headline">¶</a></h4>
+<p>For classes from the <code class="docutils literal notranslate"><span class="pre">typing</span></code> module, always import the class itself. You are explicitly allowed to import multiple specific classes on one line from the <code class="docutils literal notranslate"><span class="pre">typing</span></code> module. Ex:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+</pre></div>
+</div>
+<p>Given that this way of importing from <code class="docutils literal notranslate"><span class="pre">typing</span></code> adds items to the local namespace, any names in <code class="docutils literal notranslate"><span class="pre">typing</span></code> should be treated similarly to keywords, and not be defined in your Python code, typed or not. If there is a collision between a type and an existing name in a module, import it using <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">x</span> <span class="pre">as</span> <span class="pre">y</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span> <span class="k">as</span> <span class="n">AnyType</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conditional-imports">
+<h4>3.19.13 Conditional Imports<a class="headerlink" href="#conditional-imports" title="Permalink to this headline">¶</a></h4>
+<p>Use conditional imports only in exceptional cases where the additional imports needed for type checking must be avoided at runtime. This pattern is discouraged; alternatives such as refactoring the code to allow top level imports should be preferred.</p>
+<p>Imports that are needed only for type annotations can be placed within an <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">TYPE_CHECKING:</span></code> block.</p>
+<ul class="simple">
+<li><p>Conditionally imported types need to be referenced as strings, to be forward compatible with Python 3.6 where the annotation expressions are actually evaluated.</p></li>
+<li><p>Only entities that are used solely for typing should be defined here; this includes aliases. Otherwise it will be a runtime error, as the module will not be imported at runtime.</p></li>
+<li><p>The block should be right after all the normal imports.</p></li>
+<li><p>There should be no empty lines in the typing imports list.</p></li>
+<li><p>Sort this list as if it were a regular imports list.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">typing</span>
+<span class="k">if</span> <span class="n">typing</span><span class="o">.</span><span class="n">TYPE_CHECKING</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">sketch</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="s2">&quot;sketch.Sketch&quot;</span><span class="p">):</span> <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="circular-dependencies">
+<h4>3.19.14 Circular Dependencies<a class="headerlink" href="#circular-dependencies" title="Permalink to this headline">¶</a></h4>
+<p>Circular dependencies that are caused by typing are code smells. Such code is a good candidate for refactoring. Although technically it is possible to keep circular dependencies, the build system will not let you do so because each module has to depend on the other.</p>
+<p>Replace modules that create circular dependency imports with <code class="docutils literal notranslate"><span class="pre">Any</span></code>. Set an <a class="reference internal" href="#type-aliases"><span class="std std-ref">alias</span></a> with a meaningful name, and use the real type name from this module (any attribute of Any is Any). Alias definitions should be separated from the last import by one line.</p>
+</div>
+<div class="section" id="id83">
+<h4>3.19.15 Generics<a class="headerlink" href="#id83" title="Permalink to this headline">¶</a></h4>
+<p>When annotating, prefer to specify type parameters for generic types; otherwise, <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/#the-any-type">the generics’ parameters will be assumed to be Any</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_names</span><span class="p">(</span><span class="n">employee_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># These are both interpreted as get_names(employee_ids: List[Any]) -&gt; Dict[Any, Any]</span>
+<span class="k">def</span> <span class="nf">get_names</span><span class="p">(</span><span class="n">employee_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+  <span class="o">...</span>
+
+<span class="k">def</span> <span class="nf">get_names</span><span class="p">(</span><span class="n">employee_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>If the best type parameter for a generic is <code class="docutils literal notranslate"><span class="pre">Any</span></code>, make it explicit, but remember that in many cases <a class="reference internal" href="#typevar"><span class="std std-ref">TypeVar</span></a> might be more appropriate:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_names</span><span class="p">(</span><span class="n">employee_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Text</span><span class="p">]:</span>
+  <span class="sd">&quot;&quot;&quot;Returns a mapping from employee ID to employee name for given IDs.&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_names</span><span class="p">(</span><span class="n">employee_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">Text</span><span class="p">]:</span>
+  <span class="sd">&quot;&quot;&quot;Returns a mapping from employee ID to employee name for given IDs.&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>
