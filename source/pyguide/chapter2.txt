@@ -65,7 +65,7 @@ Other common forms of suppressing this warning include using '``_``' as the iden
 2.2 Imports
 ^^^^^^^^^^^
 
-Use ``import`` statements for packages and modules only, not for individual classes or functions. Note that there is an explicit exemption for imports from the `typing module <https://google.github.io/styleguide/pyguide.html#typing-imports>`_.
+Use ``import`` statements for packages and modules only, not for individual classes or functions. Note that there is an explicit exemption for imports from the :ref:`typing module <3-19-12-Imports-For-Typing>`.
 
 2.2.1 Definition
 """"""""""""""""
@@ -100,7 +100,7 @@ For example the module ``sound.effects.echo`` may be imported as follows:
 
 Do not use relative names in imports. Even if the module is in the same package, use the full package name. This helps prevent unintentionally importing a package twice.
 
-Imports from the `typing module <https://google.github.io/styleguide/pyguide.html#typing-imports>`_ are exempt from this rule.
+Imports from the :ref:`typing module <3-19-12-Imports-For-Typing>` are exempt from this rule.
 
 2.3 Packages
 ^^^^^^^^^^^^

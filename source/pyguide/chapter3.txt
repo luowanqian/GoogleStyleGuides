@@ -991,6 +991,8 @@ If all the string types of a function are always the same, for example if the re
 
 Writing it like this will simplify the process of porting the code to Python 3.
 
+.. _3-19-12-Imports-For-Typing:
+
 3.19.12 Imports For Typing
 """"""""""""""""""""""""""
 
