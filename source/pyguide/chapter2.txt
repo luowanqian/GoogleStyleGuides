@@ -257,9 +257,9 @@ Has the potential to change module behavior during the import, because assignmen
 
 Avoid global variables.
 
-While they are technically variables, module-level constants are permitted and encouraged. For example: ``MAX_HOLY_HANDGRENADE_COUNT = 3``. Constants must be named using all caps with underscores. See Naming below.
+While they are technically variables, module-level constants are permitted and encouraged. For example: ``MAX_HOLY_HANDGRENADE_COUNT = 3``. Constants must be named using all caps with underscores. See :ref:`Naming <3-16-Naming>` below.
 
-If needed, globals should be declared at the module level and made internal to the module by prepending an ``_`` to the name. External access must be done through public module-level functions. See Naming below.
+If needed, globals should be declared at the module level and made internal to the module by prepending an ``_`` to the name. External access must be done through public module-level functions. See :ref:`Naming <3-16-Naming>` below.
 
 2.6 Nested/Local/Inner Classes and Functions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -450,7 +450,7 @@ Harder to read and debug than local functions. The lack of names means stack tra
 2.10.4 Decision
 """""""""""""""
 
-Okay to use them for one-liners. If the code inside the lambda function is longer than 60-80 chars, it’s probably better to define it as a regular nested function.
+Okay to use them for one-liners. If the code inside the lambda function is longer than 60-80 chars, it’s probably better to define it as a regular :ref:`nested function <2-16-Lexical-Scoping>`.
 
 For common operations like multiplication, use the functions from the operator module instead of lambda functions. For example, prefer ``operator.mul`` to ``lambda x, y: x * y``.
 
@@ -550,7 +550,7 @@ Must inherit from ``object`` in Python 2. Can hide side-effects much like operat
 2.13.4 Decision
 """""""""""""""
 
-Use properties in new code to access or set data where you would normally have used simple, lightweight accessor or setter methods. Properties should be created with the ``@property`` decorator.
+Use properties in new code to access or set data where you would normally have used simple, lightweight accessor or setter methods. Properties should be created with the ``@property`` :ref:`decorator <2-17-Function-and-Method-Decorators>`.
 
 Inheritance with properties can be non-obvious if the property itself is not overridden. Thus one must make sure that accessor methods are called indirectly to ensure methods overridden in subclasses are called by the property (using the Template Method DP).
 
@@ -693,6 +693,8 @@ We do not use any Python version which does not support these features, so there
 
          apply(fn, args, kwargs)
 
+.. _2-16-Lexical-Scoping:
+
 2.16 Lexical Scoping
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -744,6 +746,8 @@ So ``foo([1, 2, 3])`` will print ``1 2 3 3``, not ``1 2 3 4``.
 
 Okay to use.
 
+.. _2-17-Function-and-Method-Decorators:
+
 2.17 Function and Method Decorators
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -787,7 +791,7 @@ Use decorators judiciously when there is a clear advantage. Decorators should fo
 
 Avoid external dependencies in the decorator itself (e.g. don’t rely on files, sockets, database connections, etc.), since they might not be available when the decorator runs (at import time, perhaps from ``pydoc`` or other tools). A decorator that is called with valid parameters should (as much as possible) be guaranteed to succeed in all cases.
 
-Decorators are a special case of “top level code” - see main for more discussion.
+Decorators are a special case of “top level code” - see :ref:`main <3-17-Main>` for more discussion.
 
 Never use ``@staticmethod`` unless forced to in order to integrate with an API defined in an existing library. Write a module level function instead.
 
